@@ -1,3 +1,4 @@
+/*
 import logo from './logo.svg';
 import './App.css';
 
@@ -20,6 +21,34 @@ function App() {
       </header>
     </div>
   );
+}
+*/
+import './App.css';
+import IDLabel from './components/IDLabel';
+import PwdLabel from './components/PwdLabel';
+import ValidLabel from './components/ValidLabel';
+import NameLabel from './components/NameLabel'
+import PhoneLabel from './components/PhoneLabel';
+import EmailLabel from './components/EmailLabel';
+import AdButton from './components/AdButton';
+import JoinButton from './components/JoinButton';
+
+function App() {
+  return (
+      <div>
+        <h1>회원가입</h1>
+        <IDLabel/>
+        <PwdLabel/>
+        <ValidLabel/>
+        <NameLabel/>
+        <PhoneLabel/>
+        <EmailLabel/>
+        <p></p>
+        <AdButton/>
+        <p></p>
+        <JoinButton/>
+      </div>
+  )
 }
 
 export default App;
