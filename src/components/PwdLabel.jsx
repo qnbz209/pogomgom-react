@@ -4,31 +4,46 @@ class PwdLabel extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: ''
+            value: '',
+            isValidate: false,
+            errorMessage: ''
         };
         this.ChangeValue = this.ChangeValue.bind(this);
-        this.ValidatePwd = this.ValidatePwd.bind(this);
+        this.ValidatePwd = this.validatePwd.bind(this);
+        this.renderErrorMessage = this.renderErrorMessage.bind(this);
     }
 
     ChangeValue(input) {
-        this.setState({value: input.target.value})
+        this.setState({value: input.target.value});
+        this.validatePwd();
     }
 
-    ValidatePwd(input) {
+    validatePwd() {
+        const input = this.state.value;
         if (input.length > 0) {
             if (input.length < 8) {
-                return (
-                    <p>비밀번호는 8자 이상</p>
-                );
+                this.setState({isValidate: false,
+                    errorMessage: "비밀번호는 8자 이상"
+                })
             } else if ((input.match(/[a-z]/g) || []).length === 0) {
-                return (
-                    <p>영어도 포함시켜줘</p>
-                );
+                this.setState({isValidate: false,
+                    errorMessage: "영어도 포함시켜줘"
+                });
             } else if ((input.match(/[0-9]/g) || []).length === 0) {
-                return (
-                    <p>숫자도 포함시켜줘</p>
-                );
+                this.setState({isValidate: false,
+                    errorMessage: "숫자도 포함시켜줘"
+                });
+            } else {
+                this.setState({isValidate: true,
+                    errorMessage: ""
+                });
             }
+        }
+    }
+
+    renderErrorMessage() {
+        if (this.state.isValidate === false) {
+            return <p>{this.state.errorMessage}</p>;
         }
     }
 
@@ -40,7 +55,7 @@ class PwdLabel extends React.Component {
                         비밀번호 <input value={this.state.value} onChange={this.ChangeValue}/>
                     </label>
                 </form>
-                {this.ValidatePwd(this.state.value)}
+                {this.renderErrorMessage()}
             </div>
         );
     }
