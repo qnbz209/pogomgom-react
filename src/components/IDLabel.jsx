@@ -2,17 +2,11 @@ import React from 'react';
 
 class IDLabel extends React.Component {
     constructor(props) {
-        super(props)
-        this.state = {
-            value: ''
-        };
+        super(props);
         this.ChangeValue = this.ChangeValue.bind(this);
         this.CheckID = this.CheckID.bind(this);
     }
 
-    ChangeValue(input) {
-        this.setState({value: input.target.value})
-    }
 
     CheckID(input) {
         if (input === 'qnbz209') {
@@ -22,12 +16,16 @@ class IDLabel extends React.Component {
         }
     }
 
+    onChangeID(event) {
+        this.props.handleID(event.target.value);
+    }
+
     render() {
         return (
             <div>
                 <form>
                     <label>
-                        아이디 <input value={this.state.value} onChange={this.ChangeValue}/>
+                        아이디 <input value={this.props.id} onChange={}/>
                     </label>
                 </form>
                 {this.CheckID(this.state.value)}
