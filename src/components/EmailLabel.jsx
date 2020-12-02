@@ -4,33 +4,50 @@ class EmailLabel extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: ''
+            errmsg: ''
         };
-        this.ChangeValue = this.ChangeValue.bind(this);
-        this.ValidateEmail = this.ValidateEmail.bind(this);
+        this.changeEmail = this.changeEmail.bind(this);
+        this.checkEmail= this.checkEmail.bind(this);
+        this.renderErrmsg = this.renderErrmsg.bind(this);
     }
 
-    ChangeValue(event) {
-        this.setState({value: event.target.value})
+    changeEmail(event) {
+        this.props.handleEmail(event.target.value);
+        this.checkEmail(event.target.value);
     }
 
-    ValidateEmail(input) {
-        if (input.len > 0 && ((input.match(/[@]/) || []).length === 0)) {
-            return (
-                <p>이메일 양식 맞춰서</p>
-            );
+    checkEmail(input) {
+        if (input.length > 0) {
+            if ((input.match(/@/) || []).length === 0) {
+                this.setState({
+                    errmsg: '이메일 양식 맞춰주세요'
+                });
+                this.props.validateEmail(false);
+            }
+            else {
+                this.setState({
+                    errmsg: ''
+                });
+                this.props.validateEmail(true);
+            }
         }
     }
 
+    renderErrmsg() {
+        if (this.state.errmsg === '') {
+            return;
+        }
+        else {
+            return <p>{this.state.errmsg}</p>;
+        }
+    }
     render() {
         return (
             <div>
-                <form>
-                    <label>
-                        이메일 <input value={this.state.value} onChange={this.ChangeValue}/>
-                    </label>
-                </form>
-                {this.ValidateEmail(this.state.value)}
+                <label>
+                    이메일 <input value={this.props.email} onChange={this.changeEmail} />
+                </label>
+                {this.renderErrmsg()}
             </div>
         );
     }

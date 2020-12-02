@@ -4,43 +4,61 @@ class PwdLabel extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: ''
+            errmsg: ''
         };
-        this.ChangeValue = this.ChangeValue.bind(this);
-        this.ValidatePwd = this.ValidatePwd.bind(this);
+        this.changePwd = this.changePwd.bind(this);
+        this.checkPwd = this.checkPwd.bind(this);
+        this.renderErrmsg = this.renderErrmsg.bind(this);
     }
 
-    ChangeValue(input) {
-        this.setState({value: input.target.value})
+    changePwd(event) {
+        this.props.handlePwd(event.target.value);
+        this.checkPwd(event.target.value);
     }
 
-    ValidatePwd(input) {
+    checkPwd(input) {
         if (input.length > 0) {
             if (input.length < 8) {
-                return (
-                    <p>비밀번호는 8자 이상</p>
-                );
+                this.setState({
+                    errmsg: '비밀번호는 8자 이상'
+                });
+                this.props.validatePwd(false);
             } else if ((input.match(/[a-z]/g) || []).length === 0) {
-                return (
-                    <p>영어도 포함시켜줘</p>
-                );
+                this.setState({
+                    errmsg: '영어도 포함시켜줘'
+                });
+                this.props.validatePwd(false);
             } else if ((input.match(/[0-9]/g) || []).length === 0) {
-                return (
-                    <p>숫자도 포함시켜줘</p>
-                );
+                this.setState({
+                    errmsg: '숫자도 포함시켜줘'
+                });
+                this.props.validatePwd(false);
             }
+            else {
+                this.setState({
+                    errmsg: ''
+                });
+                this.props.validatePwd(true);
+            }
+        }
+    }
+
+    renderErrmsg() {
+        if (this.state.errmsg === '') {
+            return;
+        }
+        else {
+            return <p>{this.state.errmsg}</p>;
         }
     }
 
     render() {
         return (
             <div>
-                <form>
-                    <label>
-                        비밀번호 <input value={this.state.value} onChange={this.ChangeValue}/>
-                    </label>
-                </form>
-                {this.ValidatePwd(this.state.value)}
+                <label>
+                    비밀번호 <input value={this.props.pwd} onChange={this.changePwd} />
+                </label>
+                {this.renderErrmsg()}
             </div>
         );
     }

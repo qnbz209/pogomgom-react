@@ -2,10 +2,16 @@ import React from 'react';
 
 class AdButton extends React.Component {
     constructor(props) {
-            super(props);
-            this.state = {
-                value: null 
-            }
+        super(props);
+        this.state = {
+        };
+        this.changeAd = this.changeAd.bind(this);
+    }
+
+    changeAd(event) {
+        this.props.handleAd(event.target.value === "true"
+                            ? true : ((event.target.value === "false")
+                                      ? false : null));
     }
 
     render() {
@@ -13,8 +19,8 @@ class AdButton extends React.Component {
             <div>
                 <p>광고동의</p>
                 <div>
-                    <input type="radio" value="true" name="ad" /> 동의함
-                    <input type="radio" value="false" name="ad" /> 동의안함
+                    <input type="radio" value="true" name="ad" onClick={this.changeAd}/> 동의함
+                    <input type="radio" value="false" name="ad" onClick={this.changeAd}/> 동의안함
                 </div>
             </div>
         );

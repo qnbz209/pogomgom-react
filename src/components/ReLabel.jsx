@@ -1,34 +1,34 @@
 import React from 'react';
 
-class PhoneLabel extends React.Component {
+class ReLabel extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             errmsg: ''
         };
-        this.changePhone = this.changePhone.bind(this);
-        this.checkPhone= this.checkPhone.bind(this);
+        this.changeRe = this.changeRe.bind(this);
+        this.checkRe= this.checkRe.bind(this);
         this.renderErrmsg = this.renderErrmsg.bind(this);
     }
 
-    changePhone(event) {
-        this.props.handlePhone(event.target.value);
-        this.checkPhone(event.target.value);
+    changeRe(event) {
+        this.props.handleRe(event.target.value);
+        this.checkRe(event.target.value);
     }
 
-    checkPhone(input) {
+    checkRe(input) {
         if (input.length > 0) {
-            if ((input.match(/[0-9]/g) || []).length === 0) {
-                this.setState({
-                    errmsg: '전화번호는 숫자로만 이루어져있어요'
-                });
-                this.props.validatePhone(false);
-            }
-            else {
+            if (input === this.props.pwd) {
                 this.setState({
                     errmsg: ''
                 });
-                this.props.validatePhone(true);
+                this.props.validateRe(true);
+            }
+            else {
+                this.setState({
+                    errmsg: '비밀번호가 달라요'
+                });
+                this.props.validateRe(false);
             }
         }
     }
@@ -46,7 +46,7 @@ class PhoneLabel extends React.Component {
         return (
             <div>
                 <label>
-                    전화번호 <input value={this.props.phone} onChange={this.changePhone} />
+                    비밀번호확인 <input value={this.props.re} onChange={this.changeRe} />
                 </label>
                 {this.renderErrmsg()}
             </div>
@@ -54,4 +54,4 @@ class PhoneLabel extends React.Component {
     }
 }
 
-export default PhoneLabel;
+export default ReLabel;

@@ -4,26 +4,43 @@ class JoinButton extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            agree: false
+            errmsg: ''
         };
-        this.ChangeState = this.ChangeState.bind(this)
-        this.ShowState = this.ShowState.bind(this)
+        this.checkJoin = this.checkJoin.bind(this);
+        this.renderErrmsg = this.renderErrmsg.bind(this);
     }
 
-    ChangeState() {
-        this.setState(state => ({agree: !state.agree}));
+    checkJoin(input) {
+        if (!this.props.idValid || !this.props.pwdValid ||
+            !this.props.reValid || !this.props.phoneValid ||
+            !this.props.emailValid || this.props.ad === null) {
+            this.setState({
+                errmsg: '위의 조건들을 다 만족시켜야해'
+            });
+        }
+        else {
+            this.setState({
+                errmsg: ''
+            });
+        }
     }
 
-    ShowState() {
-        return this.state.agree ? "고마워!" : "가입"
+    renderErrmsg() {
+        if (this.state.errmsg === '') {
+            return;
+        }
+        else {
+            return <p>{this.state.errmsg}</p>;
+        }
     }
 
     render() {
         return (
             <div>
-                <button Click={this.ChangeState}>
-                    {this.ShowState()}
+                <button onClick={this.checkJoin}>
+                    가입
                 </button>
+                {this.renderErrmsg()}
             </div>
         );
     }

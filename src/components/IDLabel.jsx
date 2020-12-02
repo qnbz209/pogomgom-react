@@ -4,46 +4,42 @@ class IDLabel extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            isValidate: false,
             errmsg: ''
         };
         this.changeID = this.changeID.bind(this);
-        this.validateID = this.validateID.bind(this);
+        this.checkID= this.checkID.bind(this);
         this.renderErrmsg = this.renderErrmsg.bind(this);
     }
 
     changeID(event) {
-        this.validateID();
         this.props.handleID(event.target.value);
+        this.checkID(event.target.value);
     }
 
-    validateID() {
-        const input = this.props.id;
-
+    checkID(input) {
         if (input.length > 0) {
             if (input === 'qnbz209') {
                 this.setState({
-                    isValidate: false,
                     errmsg: '이미 존재하는 아이디에요'
                 });
+                this.props.validateID(false);
             }
             else {
                 this.setState({
-                    isValidate: true,
                     errmsg: ''
                 });
+                this.props.validateID(true);
             }
-        }
-        else {
-            this.setState({
-                isValidate: false,
-                errmsg: '아이디를 입력해주세요'
-            });
         }
     }
 
     renderErrmsg() {
-        return <p>{this.state.errmsg}</p>;
+        if (this.state.errmsg === '') {
+            return;
+        }
+        else {
+            return <p>{this.state.errmsg}</p>;
+        }
     }
 
     render() {
@@ -52,7 +48,7 @@ class IDLabel extends React.Component {
                 <label>
                     아이디 <input value={this.props.id} onChange={this.changeID}/>
                 </label>
-                {this.renderErrmsg}
+                {this.renderErrmsg()}
             </div>
         );
     }
