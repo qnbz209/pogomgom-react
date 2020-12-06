@@ -1,4 +1,5 @@
 import React from 'react';
+import renderErrorMessage from './ErrorMessage.jsx';
 
 class ReLabel extends React.Component {
     constructor(props) {
@@ -8,7 +9,6 @@ class ReLabel extends React.Component {
         };
         this.changeRe = this.changeRe.bind(this);
         this.checkRe= this.checkRe.bind(this);
-        this.renderErrmsg = this.renderErrmsg.bind(this);
     }
 
     changeRe(event) {
@@ -33,22 +33,13 @@ class ReLabel extends React.Component {
         }
     }
 
-    renderErrmsg() {
-        if (this.state.errmsg === '') {
-            return;
-        }
-        else {
-            return <p>{this.state.errmsg}</p>;
-        }
-    }
-
     render() {
         return (
             <div>
                 <label>
-                    비밀번호확인 <input value={this.props.re} onChange={this.changeRe} />
+                    비밀번호확인 <input type="password" value={this.props.re} onChange={this.changeRe} />
                 </label>
-                {this.renderErrmsg()}
+                {renderErrorMessage(this.state.errmsg)}
             </div>
         );
     }

@@ -1,14 +1,15 @@
 import React from 'react';
+import renderErrorMessage from './ErrorMessage.jsx';
 
 class PwdLabel extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            value: '',
             errmsg: ''
         };
         this.changePwd = this.changePwd.bind(this);
         this.checkPwd = this.checkPwd.bind(this);
-        this.renderErrmsg = this.renderErrmsg.bind(this);
     }
 
     changePwd(event) {
@@ -41,14 +42,11 @@ class PwdLabel extends React.Component {
                 this.props.validatePwd(true);
             }
         }
-    }
-
-    renderErrmsg() {
-        if (this.state.errmsg === '') {
-            return;
-        }
         else {
-            return <p>{this.state.errmsg}</p>;
+            this.setState({
+                errmsg: ''
+            });
+            this.props.validatePwd(false);
         }
     }
 
@@ -56,9 +54,9 @@ class PwdLabel extends React.Component {
         return (
             <div>
                 <label>
-                    비밀번호 <input value={this.props.pwd} onChange={this.changePwd} />
+                    비밀번호 <input type="password" value={this.props.pwd} onChange={this.changePwd} />
                 </label>
-                {this.renderErrmsg()}
+                {renderErrorMessage(this.state.errmsg)}
             </div>
         );
     }

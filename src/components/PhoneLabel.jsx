@@ -1,4 +1,5 @@
 import React from 'react';
+import renderErrorMessage from './ErrorMessage.jsx';
 
 class PhoneLabel extends React.Component {
     constructor(props) {
@@ -8,7 +9,6 @@ class PhoneLabel extends React.Component {
         };
         this.changePhone = this.changePhone.bind(this);
         this.checkPhone= this.checkPhone.bind(this);
-        this.renderErrmsg = this.renderErrmsg.bind(this);
     }
 
     changePhone(event) {
@@ -33,22 +33,13 @@ class PhoneLabel extends React.Component {
         }
     }
 
-    renderErrmsg() {
-        if (this.state.errmsg === '') {
-            return;
-        }
-        else {
-            return <p>{this.state.errmsg}</p>;
-        }
-    }
-
     render() {
         return (
             <div>
                 <label>
                     전화번호 <input value={this.props.phone} onChange={this.changePhone} />
                 </label>
-                {this.renderErrmsg()}
+                {renderErrorMessage(this.state.errmsg)}
             </div>
         );
     }

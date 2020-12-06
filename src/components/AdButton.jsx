@@ -17,8 +17,8 @@ class AdButton extends React.Component {
     render() {
         return (
             <div>
-                <p>광고동의</p>
                 <div>
+                    광고동의
                     <input type="radio" value="true" name="ad" onClick={this.changeAd}/> 동의함
                     <input type="radio" value="false" name="ad" onClick={this.changeAd}/> 동의안함
                 </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import IDLabel from './IDLabel';
 import PwdLabel from './PwdLabel';
 import ReLabel from './ReLabel';
-import NameLabel from './NameLabel'
+import NameLabel from './NameLabel';
 import PhoneLabel from './PhoneLabel';
 import EmailLabel from './EmailLabel';
 import AdButton from './AdButton';
@@ -13,17 +13,17 @@ class Form extends React.Component {
         super(props);
         this.state = {
             id: '',
-            idValid: false,
             pwd: '',
-            pwdValid: false,
             re: '',
-            reValid: false,
             name: '',
             phone: '',
-            phoneValid: false,
             email: '',
-            emailValid: false,
             ad: null,
+            idValid: false,
+            pwdValid: false,
+            reValid: false,
+            phoneValid: false,
+            emailValid: false
         }
         this.handleID = this.handleID.bind(this);
         this.validateID = this.validateID.bind(this);
@@ -86,18 +86,45 @@ class Form extends React.Component {
     handleAd(bool) {
         this.setState({ad: bool})
     }
-    
+
     render() {
         return (
             <div>
-                <IDLabel id={this.state.id} handleID={this.handleID} validateID={this.validateID}/>
-                <PwdLabel pwd={this.state.pwd} handlePwd={this.handlePwd} validatePwd={this.validatePwd}/>
-                <ReLabel re={this.state.re} handleRe={this.handleRe} pwd={this.state.pwd} validateRe={this.validateRe}/>
-                <NameLabel name={this.state.name} handleName={this.handleName}/>
-                <PhoneLabel phone={this.state.phone} handlePhone={this.handlePhone} validatePhone={this.validatePhone}/>
-                <EmailLabel email={this.state.email} handleEmail={this.handleEmail} validateEmail={this.validateEmail}/>
-                <AdButton ad={this.state.ad} handleAd={this.handleAd} />
-                <JoinButton idValid={this.state.idValid} pwdValid={this.state.pwdValid} reValid={this.state.reValid} phoneValid={this.state.phoneValid} emailValid={this.state.emailValid} ad={this.state.ad}/>
+                <IDLabel
+                    id={this.state.id}
+                    handleID={this.handleID}
+                    validateID={this.validateID} />
+                <PwdLabel
+                    pwd={this.state.pwd}
+                    handlePwd={this.handlePwd}
+                    validatePwd={this.validatePwd} />
+                <ReLabel
+                    re={this.state.re}
+                    handleRe={this.handleRe}
+                    pwd={this.state.pwd}
+                    validateRe={this.validateRe} />
+                <NameLabel
+                    name={this.state.name}
+                    handleName={this.handleName} />
+                <PhoneLabel
+                    phone={this.state.phone}
+                    handlePhone={this.handlePhone}
+                    validatePhone={this.validatePhone} />
+                <EmailLabel
+                    email={this.state.email}
+                    handleEmail={this.handleEmail}
+                    validateEmail={this.validateEmail} />
+                <AdButton
+                    ad={this.state.ad}
+                    handleAd={this.handleAd} />
+                <JoinButton
+                    idValid={this.state.idValid}
+                    pwdValid={this.state.pwdValid}
+                    reValid={this.state.reValid}
+                    name={this.state.name}
+                    phoneValid={this.state.phoneValid}
+                    emailValid={this.state.emailValid}
+                    ad={this.state.ad} />
             </div>
         )
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import renderErrorMessage from './ErrorMessage.jsx';
 
 class IDLabel extends React.Component {
     constructor(props) {
@@ -8,7 +9,6 @@ class IDLabel extends React.Component {
         };
         this.changeID = this.changeID.bind(this);
         this.checkID= this.checkID.bind(this);
-        this.renderErrmsg = this.renderErrmsg.bind(this);
     }
 
     changeID(event) {
@@ -31,14 +31,11 @@ class IDLabel extends React.Component {
                 this.props.validateID(true);
             }
         }
-    }
-
-    renderErrmsg() {
-        if (this.state.errmsg === '') {
-            return;
-        }
         else {
-            return <p>{this.state.errmsg}</p>;
+            this.setState({
+                errmsg: ''
+            });
+            this.props.validateID(false);
         }
     }
 
@@ -48,7 +45,7 @@ class IDLabel extends React.Component {
                 <label>
                     아이디 <input value={this.props.id} onChange={this.changeID}/>
                 </label>
-                {this.renderErrmsg()}
+                {renderErrorMessage(this.state.errmsg)}
             </div>
         );
     }
