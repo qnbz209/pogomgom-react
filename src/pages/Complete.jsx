@@ -14,7 +14,7 @@ class Complete extends React.Component {
                 </div>
                 <div>
                     {this.props.id}로
-                    {this.state.date.toLocaleTimeString()}에 가입되셨어요!
+                    {this.state.date.toLocaleDateString()} {this.state.date.toLocaleTimeString()}에 가입되었어요!
                 </div>
             </div>
         )

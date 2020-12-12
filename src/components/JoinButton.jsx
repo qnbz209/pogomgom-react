@@ -7,10 +7,7 @@ class JoinButton extends React.Component {
     }
 
     checkJoin() {
-        if (!this.props.isIDValid || !this.props.isPwdValid ||
-            !this.props.isConfirmValid || this.props.name === '' ||
-            !this.props.isPhoneValid || !this.props.isEmailValid ||
-            this.props.adAgree === null) {
+        if (!this.props.valid) {
             alert('위의 조건들을 다 만족시켜야해');
         }
     }

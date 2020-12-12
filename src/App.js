@@ -46,7 +46,6 @@ class App extends React.Component {
             path="/complete"
             render={()=>
               <Complete
-                component={Complete}
                 id={this.state.id}
                 name={this.state.name} />}
           />

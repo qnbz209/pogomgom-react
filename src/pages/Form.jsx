@@ -30,6 +30,14 @@ class Form extends React.Component {
     }
 
     render() {
+        const isAllValid = this.state.isIDValid &&
+                           this.state.isPwdValid &&
+                           this.state.isConfirmValid &&
+                           this.state.isPwdValid &&
+                           this.state.isEmailValid &&
+                           this.state.adAgree !== null &&
+                           this.props.name !== ''
+        
         return (
             <div>
                 <IDLabel
@@ -54,24 +62,9 @@ class Form extends React.Component {
                     validate={this.handleState} />
                 <AdButton
                     validate={this.handleState} />
-                <ConditionalLink
-                    to="/complete"
-                    condition={this.state.isIDValid &&
-                               this.state.isPwdValid &&
-                               this.state.isConfirmValid &&
-                               this.props.name !== '' &&
-                               this.state.isPhoneValid &&
-                               this.state.isEmailValid &&
-                               this.state.adAgree !== null}>
+                <ConditionalLink to="/complete" condition={isAllValid}>
                     <JoinButton
-                        isIDValid={this.state.isIDValid}
-                        isPwdValid={this.state.isPwdValid}
-                        isConfirmValid={this.state.isConfirmValid}
-                        name={this.props.name}
-                        isPhoneValid={this.state.isPhoneValid}
-                        isEmailValid={this.state.isEmailValid}
-                        adAgree={this.state.adAgree}
-                        validate={this.handleState} />
+                        valid = {isAllValid} />
                 </ConditionalLink>
             </div>
         )
