@@ -54,7 +54,15 @@ class Form extends React.Component {
                     validate={this.handleState} />
                 <AdButton
                     validate={this.handleState} />
-                <ConditionalLink to="/complete" condition={this.state.allValid}>
+                <ConditionalLink
+                    to="/complete"
+                    condition={this.state.isIDValid &&
+                               this.state.isPwdValid &&
+                               this.state.isConfirmValid &&
+                               this.props.name !== '' &&
+                               this.state.isPhoneValid &&
+                               this.state.isEmailValid &&
+                               this.state.adAgree !== null}>
                     <JoinButton
                         isIDValid={this.state.isIDValid}
                         isPwdValid={this.state.isPwdValid}

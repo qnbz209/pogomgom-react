@@ -13,9 +13,6 @@ class JoinButton extends React.Component {
             this.props.adAgree === null) {
             alert('위의 조건들을 다 만족시켜야해');
         }
-        else {
-            this.props.validate('allValid', true);
-        }
     }
     
     render() {
