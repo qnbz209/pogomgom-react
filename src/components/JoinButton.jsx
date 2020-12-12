@@ -3,17 +3,18 @@ import React from 'react';
 class JoinButton extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            errmsg: ''
-        };
         this.checkJoin = this.checkJoin.bind(this);
     }
 
-    checkJoin(input) {
-        if (!this.props.idValid || !this.props.pwdValid || !this.props.reValid ||
-            this.props.name === '' || !this.props.phoneValid ||
-            !this.props.emailValid || this.props.ad === null) {
+    checkJoin() {
+        if (!this.props.isIDValid || !this.props.isPwdValid ||
+            !this.props.isConfirmValid || this.props.name === '' ||
+            !this.props.isPhoneValid || !this.props.isEmailValid ||
+            this.props.adAgree === null) {
             alert('위의 조건들을 다 만족시켜야해');
+        }
+        else {
+            this.props.validate('allValid', true);
         }
     }
     

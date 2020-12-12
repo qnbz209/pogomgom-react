@@ -3,15 +3,13 @@ import React from 'react';
 class AdButton extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        };
         this.changeAd = this.changeAd.bind(this);
     }
 
     changeAd(event) {
-        this.props.handleAd(event.target.value === "true"
-                            ? true : ((event.target.value === "false")
-                                      ? false : null));
+        this.props.validate('adAgree', event.target.value === "true"
+                                     ? true : ((event.target.value === "false")
+                                     ? false : null));
     }
 
     render() {

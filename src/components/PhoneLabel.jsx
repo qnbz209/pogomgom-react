@@ -1,5 +1,5 @@
 import React from 'react';
-import renderErrorMessage from './ErrorMessage.jsx';
+import renderMessageIfExist from './RenderMessage';
 
 class PhoneLabel extends React.Component {
     constructor(props) {
@@ -8,28 +8,34 @@ class PhoneLabel extends React.Component {
             errmsg: ''
         };
         this.changePhone = this.changePhone.bind(this);
-        this.checkPhone= this.checkPhone.bind(this);
+        this.checkPhone= this.validatePhone.bind(this);
     }
 
     changePhone(event) {
-        this.props.handlePhone(event.target.value);
-        this.checkPhone(event.target.value);
+        this.props.handleState('phone', event.target.value);
+        this.validatePhone(event.target.value);
     }
 
-    checkPhone(input) {
+    validatePhone(input) {
         if (input.length > 0) {
             if ((input.match(/[0-9]/g) || []).length === 0) {
                 this.setState({
                     errmsg: '전화번호는 숫자로만 이루어져있어요'
                 });
-                this.props.validatePhone(false);
+                this.props.validate('isPhoneValid', false);
             }
             else {
                 this.setState({
                     errmsg: ''
                 });
-                this.props.validatePhone(true);
+                this.props.validate('isPhoneValid', true);
             }
+        }
+        else {
+            this.setState({
+                errmsg: ''
+            });
+            this.props.validate('isPhoneValid', false);
         }
     }
 
@@ -39,7 +45,7 @@ class PhoneLabel extends React.Component {
                 <label>
                     전화번호 <input value={this.props.phone} onChange={this.changePhone} />
                 </label>
-                {renderErrorMessage(this.state.errmsg)}
+                {renderMessageIfExist(this.state.errmsg)}
             </div>
         );
     }

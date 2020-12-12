@@ -2,12 +2,12 @@ import React from 'react';
 
 class NameLabel extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.changeName = this.changeName.bind(this);
     }
 
     changeName(event) {
-        this.props.handleName(event.target.value);
+        this.props.handleState('name', event.target.value);
     }
 
     render() {

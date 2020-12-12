@@ -1,5 +1,5 @@
 import React from 'react';
-import renderErrorMessage from './ErrorMessage.jsx';
+import renderMessageIfExist from './RenderMessage';
 
 class EmailLabel extends React.Component {
     constructor(props) {
@@ -8,28 +8,34 @@ class EmailLabel extends React.Component {
             errmsg: ''
         };
         this.changeEmail = this.changeEmail.bind(this);
-        this.checkEmail= this.checkEmail.bind(this);
+        this.checkEmail= this.validateEmail.bind(this);
     }
 
     changeEmail(event) {
-        this.props.handleEmail(event.target.value);
-        this.checkEmail(event.target.value);
+        this.props.handleState('email', event.target.value);
+        this.validateEmail(event.target.value);
     }
 
-    checkEmail(input) {
+    validateEmail(input) {
         if (input.length > 0) {
             if ((input.match(/@/) || []).length === 0) {
                 this.setState({
                     errmsg: '이메일 양식 맞춰주세요'
                 });
-                this.props.validateEmail(false);
+                this.props.validate('isEmailValid', false);
             }
             else {
                 this.setState({
                     errmsg: ''
                 });
-                this.props.validateEmail(true);
+                this.props.validate('isEmailValid', true);
             }
+        }
+        else {
+            this.setState({
+                errmsg: ''
+            });
+            this.props.validate('isEmailValid', false);
         }
     }
     
@@ -39,7 +45,7 @@ class EmailLabel extends React.Component {
                 <label>
                     이메일 <input value={this.props.email} onChange={this.changeEmail} />
                 </label>
-                {renderErrorMessage(this.state.errmsg)}
+                {renderMessageIfExist(this.state.errmsg)}
             </div>
         );
     }

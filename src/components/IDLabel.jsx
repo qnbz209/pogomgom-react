@@ -1,5 +1,5 @@
 import React from 'react';
-import renderErrorMessage from './ErrorMessage.jsx';
+import renderMessageIfExist from './RenderMessage';
 
 class IDLabel extends React.Component {
     constructor(props) {
@@ -8,34 +8,34 @@ class IDLabel extends React.Component {
             errmsg: ''
         };
         this.changeID = this.changeID.bind(this);
-        this.checkID= this.checkID.bind(this);
+        this.validateID = this.validateID.bind(this);
     }
 
     changeID(event) {
-        this.props.handleID(event.target.value);
-        this.checkID(event.target.value);
+        this.props.handleState('id', event.target.value);
+        this.validateID(event.target.value);
     }
 
-    checkID(input) {
+    validateID(input) {
         if (input.length > 0) {
             if (input === 'qnbz209') {
                 this.setState({
                     errmsg: '이미 존재하는 아이디에요'
                 });
-                this.props.validateID(false);
+                this.props.validate('isIDValid', false);
             }
             else {
                 this.setState({
                     errmsg: ''
                 });
-                this.props.validateID(true);
+                this.props.validate('isIDValid', true);
             }
         }
         else {
             this.setState({
                 errmsg: ''
             });
-            this.props.validateID(false);
+            this.props.validate('isIDValid', true);
         }
     }
 
@@ -45,7 +45,7 @@ class IDLabel extends React.Component {
                 <label>
                     아이디 <input value={this.props.id} onChange={this.changeID}/>
                 </label>
-                {renderErrorMessage(this.state.errmsg)}
+                {renderMessageIfExist(this.state.errmsg)}
             </div>
         );
     }
