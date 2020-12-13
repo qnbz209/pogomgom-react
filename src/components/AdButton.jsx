@@ -3,8 +3,6 @@ import React from 'react';
 class AdButton extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        };
         this.changeAd = this.changeAd.bind(this);
     }
 
