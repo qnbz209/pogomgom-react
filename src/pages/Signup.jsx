@@ -8,7 +8,7 @@ import AdButton from '../components/AdButton';
 import JoinButton from '../components/JoinButton';
 import ConditionalLink from '../components/ConditionalLink';
 
-class Form extends React.Component {
+class Signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,49 +20,46 @@ class Form extends React.Component {
             adAgree: null,
             allValid: false
         }
-        this.handleState = this.handleState.bind(this);
+        this.setStateWithKey = this.setStateWithKey.bind(this);
     }
 
-    handleState(key, value) {
+    setStateWithKey(key, value) {
         this.setState({
             [key]: value
         })
     }
 
     render() {
-        const isAllValid = this.state.isIDValid &&
-                           this.state.isPwdValid &&
-                           this.state.isConfirmValid &&
-                           this.state.isPwdValid &&
-                           this.state.isEmailValid &&
-                           this.state.adAgree !== null &&
-                           this.props.name !== ''
+        const { isIDValid, isPwdValid, isConfirmValid, isPhoneValid, isEmailValid } = this.state;
+        const isAdValid = this.state.adAgree !== null;
+        const isNameValid = this.props.name !== '';
+        const isAllValid = isIDValid && isPwdValid && isConfirmValid && isPhoneValid && isEmailValid && isAdValid && isNameValid;
         
         return (
             <div>
                 <IDLabel
                     id={this.props.id}
-                    handleState={this.props.handleState}
-                    validate={this.handleState} />
+                    handleAppState={this.props.changeParentState}
+                    validate={this.setStateWithKey} />
                 <PwdLabel
                     pwd={this.props.pwd}
-                    handleState={this.props.handleState}
-                    validate={this.handleState} />
+                    handleAppState={this.props.changeParentState}
+                    validate={this.setStateWithKey} />
                 <NameLabel
                     name={this.props.name}
-                    handleState={this.props.handleState}
-                    validate={this.handleState} />
+                    handleAppState={this.props.changeParentState}
+                    validate={this.setStateWithKey} />
                 <PhoneLabel
                     phone={this.props.phone}
-                    handleState={this.props.handleState}
-                    validate={this.handleState} />
+                    handleAppState={this.props.changeParentState}
+                    validate={this.setStateWithKey} />
                 <EmailLabel
                     email={this.props.email}
-                    handleState={this.props.handleState}
-                    validate={this.handleState} />
+                    handleAppState={this.props.changeParentState}
+                    validate={this.setStateWithKey} />
                 <AdButton
-                    validate={this.handleState} />
-                <ConditionalLink to="/complete" condition={isAllValid}>
+                    validate={this.setStateWithKey} />
+                <ConditionalLink to="/signup-success" condition={isAllValid}>
                     <JoinButton
                         valid = {isAllValid} />
                 </ConditionalLink>
@@ -71,4 +68,4 @@ class Form extends React.Component {
     }
 }
 
-export default Form;
+export default Signup;

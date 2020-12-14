@@ -7,7 +7,7 @@ class NameLabel extends React.Component {
     }
 
     changeName(event) {
-        this.props.handleState('name', event.target.value);
+        this.props.handleAppState('name', event.target.value);
     }
 
     render() {

@@ -12,7 +12,7 @@ class PhoneLabel extends React.Component {
     }
 
     changePhone(event) {
-        this.props.handleState('phone', event.target.value);
+        this.props.handleAppState('phone', event.target.value);
         this.validatePhone(event.target.value);
     }
 

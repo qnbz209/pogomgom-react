@@ -7,7 +7,7 @@ class Home extends React.Component {
             <div>
                 안녕하세요!
                 <div>
-                    <Link to="/joinform">
+                    <Link to="/signup">
                         회원가입하실래요?
                     </Link>
                 </div>

@@ -14,8 +14,9 @@ class PwdLabel extends React.Component {
     }
 
     changePwd(event) {
-        this.props.handleState('pwd', event.target.value);
-        this.validatePwd(event.target.value);
+        const value = event.target.value;
+        this.props.handleAppState('pwd', value);
+        this.validatePwd(value);
     }
 
     validatePwd(input) {

@@ -12,8 +12,9 @@ class EmailLabel extends React.Component {
     }
 
     changeEmail(event) {
-        this.props.handleState('email', event.target.value);
-        this.validateEmail(event.target.value);
+        const value = event.target.value;
+        this.props.handleAppState('email', value);
+        this.validateEmail(value);
     }
 
     validateEmail(input) {

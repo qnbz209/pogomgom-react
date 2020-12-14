@@ -12,8 +12,9 @@ class IDLabel extends React.Component {
     }
 
     changeID(event) {
-        this.props.handleState('id', event.target.value);
-        this.validateID(event.target.value);
+        const value = event.target.value;
+        this.props.handleAppState('id', value);
+        this.validateID(value);
     }
 
     validateID(input) {

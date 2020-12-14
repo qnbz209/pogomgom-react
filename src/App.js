@@ -1,9 +1,9 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route , Switch } from 'react-router-dom';
 import Home from './pages/Home';
-import Form from './pages/Form';
-import Complete from './pages/Complete';
+import Signup from './pages/Signup';
+import SignupSuccess from './pages/SignupSuccess';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,10 +15,10 @@ class App extends React.Component {
       phone: '',
       email: ''
     }
-    this.handleState = this.handleState.bind(this);
+    this.setStateWithKey = this.setStateWithKey.bind(this);
   }
 
-  handleState(key, value) {
+  setStateWithKey(key, value) {
     this.setState({
       [key]: value
     })
@@ -28,27 +28,25 @@ class App extends React.Component {
     return (
       <div>
         <BrowserRouter>
-          <Route
-            exact path="/"
-            component={Home} />
-          <Route
-            path="/joinform"
-            render={()=>
-              <Form
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/signup">
+              <Signup
                 id={this.state.id}
                 pwd={this.state.pwd}
                 name={this.state.name}
                 phone={this.state.phone}
                 email={this.state.email}
-                handleState={this.handleState}/>}
-          />
-          <Route
-            path="/complete"
-            render={()=>
-              <Complete
+                changeParentState={this.setStateWithKey} />
+            </Route>
+            <Route path="/signup-success">
+              <SignupSuccess
                 id={this.state.id}
-                name={this.state.name} />}
-          />
+                name={this.state.name} />
+            </Route>
+          </Switch>
         </BrowserRouter>
       </div>
     );
