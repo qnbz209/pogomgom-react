@@ -1,54 +1,56 @@
-/*
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import { BrowserRouter, Route , Switch } from 'react-router-dom';
+import Home from './pages/Home';
+import Signup from './pages/Signup';
+import SignupSuccess from './pages/SignupSuccess';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-*/
-import './App.css';
-import IDLabel from './components/IDLabel';
-import PwdLabel from './components/PwdLabel';
-import ValidLabel from './components/ValidLabel';
-import NameLabel from './components/NameLabel'
-import PhoneLabel from './components/PhoneLabel';
-import EmailLabel from './components/EmailLabel';
-import AdButton from './components/AdButton';
-import JoinButton from './components/JoinButton';
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: '',
+      pwd: '',
+      name: '',
+      phone: '',
+      email: ''
+    }
+    this.setStateWithKey = this.setStateWithKey.bind(this);
+  }
 
-function App() {
-  return (
+  setStateWithKey(key, value) {
+    this.setState({
+      [key]: value
+    })
+  }
+
+  render() {
+    return (
       <div>
-        <h1>회원가입</h1>
-        <IDLabel/>
-        <PwdLabel/>
-        <ValidLabel/>
-        <NameLabel/>
-        <PhoneLabel/>
-        <EmailLabel/>
-        <p></p>
-        <AdButton/>
-        <p></p>
-        <JoinButton/>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/signup">
+              <Signup
+                id={this.state.id}
+                pwd={this.state.pwd}
+                name={this.state.name}
+                phone={this.state.phone}
+                email={this.state.email}
+                changeParentState={this.setStateWithKey} />
+            </Route>
+            <Route path="/signup-success">
+              <SignupSuccess
+                id={this.state.id}
+                name={this.state.name} />
+            </Route>
+          </Switch>
+        </BrowserRouter>
       </div>
-  )
+    );
+  }
 }
 
 export default App;

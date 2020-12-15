@@ -1,36 +1,52 @@
 import React from 'react';
+import renderMessageIfExist from './RenderMessage';
 
 class IDLabel extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: ''
+            errmsg: ''
         };
-        this.ChangeValue = this.ChangeValue.bind(this);
-        this.CheckID = this.CheckID.bind(this);
+        this.changeID = this.changeID.bind(this);
+        this.validateID = this.validateID.bind(this);
     }
 
-    ChangeValue(input) {
-        this.setState({value: input.target.value})
+    changeID(event) {
+        const value = event.target.value;
+        this.props.handleAppState('id', value);
+        this.validateID(value);
     }
 
-    CheckID(input) {
-        if (input === 'qnbz209') {
-            return (
-                <p>이미 있음</p>
-            );
+    validateID(input) {
+        if (input.length > 0) {
+            if (input === 'qnbz209') {
+                this.setState({
+                    errmsg: '이미 존재하는 아이디에요'
+                });
+                this.props.validate('isIDValid', false);
+            }
+            else {
+                this.setState({
+                    errmsg: ''
+                });
+                this.props.validate('isIDValid', true);
+            }
+        }
+        else {
+            this.setState({
+                errmsg: ''
+            });
+            this.props.validate('isIDValid', true);
         }
     }
 
     render() {
         return (
             <div>
-                <form>
-                    <label>
-                        아이디 <input value={this.state.value} onChange={this.ChangeValue}/>
-                    </label>
-                </form>
-                {this.CheckID(this.state.value)}
+                <label>
+                    아이디 <input value={this.props.id} onChange={this.changeID}/>
+                </label>
+                {renderMessageIfExist(this.state.errmsg)}
             </div>
         );
     }

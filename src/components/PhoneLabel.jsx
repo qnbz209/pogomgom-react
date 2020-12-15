@@ -1,38 +1,51 @@
 import React from 'react';
+import renderMessageIfExist from './RenderMessage';
 
 class PhoneLabel extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: ''
+            errmsg: ''
         };
-        this.ChangeValue = this.ChangeValue.bind(this);
-        this.ValidatePhone = this.ValidatePhone.bind(this);
+        this.changePhone = this.changePhone.bind(this);
+        this.checkPhone= this.validatePhone.bind(this);
     }
 
-    ChangeValue(input) {
-        this.setState({value: input.target.value})
+    changePhone(event) {
+        this.props.handleAppState('phone', event.target.value);
+        this.validatePhone(event.target.value);
     }
 
-    ValidatePhone(input) {
+    validatePhone(input) {
         if (input.length > 0) {
             if ((input.match(/[0-9]/g) || []).length === 0) {
-                return (
-                    <p>전화번호는 숫자로만 이루어져있어요</p>
-                )
+                this.setState({
+                    errmsg: '전화번호는 숫자로만 이루어져있어요'
+                });
+                this.props.validate('isPhoneValid', false);
             }
+            else {
+                this.setState({
+                    errmsg: ''
+                });
+                this.props.validate('isPhoneValid', true);
+            }
+        }
+        else {
+            this.setState({
+                errmsg: ''
+            });
+            this.props.validate('isPhoneValid', false);
         }
     }
 
     render() {
         return (
             <div>
-                <form>
-                    <label>
-                        전화번호 <input value={this.state.value} onChange={this.ChangeValue}/>
-                    </label>
-                </form>
-                {this.ValidatePhone(this.state.value)}
+                <label>
+                    전화번호 <input value={this.props.phone} onChange={this.changePhone} />
+                </label>
+                {renderMessageIfExist(this.state.errmsg)}
             </div>
         );
     }

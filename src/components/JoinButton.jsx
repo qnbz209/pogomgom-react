@@ -3,26 +3,20 @@ import React from 'react';
 class JoinButton extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            agree: false
-        };
-        this.ChangeState = this.ChangeState.bind(this)
-        this.ShowState = this.ShowState.bind(this)
+        this.checkJoin = this.checkJoin.bind(this);
     }
 
-    ChangeState() {
-        this.setState(state => ({agree: !state.agree}));
+    checkJoin() {
+        if (!this.props.valid) {
+            alert('위의 조건들을 다 만족시켜야해');
+        }
     }
-
-    ShowState() {
-        return this.state.agree ? "고마워!" : "가입"
-    }
-
+    
     render() {
         return (
             <div>
-                <button Click={this.ChangeState}>
-                    {this.ShowState()}
+                <button onClick={this.checkJoin}>
+                    가입
                 </button>
             </div>
         );

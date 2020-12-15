@@ -1,46 +1,97 @@
 import React from 'react';
+import renderMessageIfExist from './RenderMessage';
 
 class PwdLabel extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: ''
+            pwdErrmsg: '',
+            confirmErrmsg: ''
         };
-        this.ChangeValue = this.ChangeValue.bind(this);
-        this.ValidatePwd = this.ValidatePwd.bind(this);
+        this.changePwd = this.changePwd.bind(this);
+        this.validatePwd = this.validatePwd.bind(this);
+        this.validateConfirm = this.validateConfirm.bind(this);
     }
 
-    ChangeValue(input) {
-        this.setState({value: input.target.value})
+    changePwd(event) {
+        const value = event.target.value;
+        this.props.handleAppState('pwd', value);
+        this.validatePwd(value);
     }
 
-    ValidatePwd(input) {
+    validatePwd(input) {
         if (input.length > 0) {
             if (input.length < 8) {
-                return (
-                    <p>비밀번호는 8자 이상</p>
-                );
+                this.setState({
+                    pwdErrmsg: '비밀번호는 8자 이상'
+                });
+                this.props.validate('isPwdValid', false);
             } else if ((input.match(/[a-z]/g) || []).length === 0) {
-                return (
-                    <p>영어도 포함시켜줘</p>
-                );
+                this.setState({
+                    pwdErrmsg: '영어도 포함시켜줘'
+                });
+                this.props.validate('isPwdValid', false);
             } else if ((input.match(/[0-9]/g) || []).length === 0) {
-                return (
-                    <p>숫자도 포함시켜줘</p>
-                );
+                this.setState({
+                    pwdErrmsg: '숫자도 포함시켜줘'
+                });
+                this.props.validate('isPwdValid', false);
             }
+            else {
+                this.setState({
+                    pwdErrmsg: ''
+                });
+                this.props.validate('isPwdValid', true);
+            }
+        }
+        else {
+            this.setState({
+                pwdErrmsg: ''
+            });
+            this.props.validate('isPwdValid', false);
+        }
+    }
+
+    validateConfirm(event) {
+        const input = event.target.value;
+
+        if (input.length > 0) {
+            if (input === this.props.pwd) {
+                this.setState({
+                    confirmErrmsg: ''
+                });
+                this.props.validate('isConfirmValid', true);
+            }
+            else {
+                this.setState({
+                    confirmErrmsg: '비밀번호랑 똑같이'
+                });
+                this.props.validate('isConfirmValid', false);
+            }
+        }
+        else {
+            this.setState({
+                confirmErrmsg: ''
+            });
+            this.props.validate('isConfirmValid', false);
         }
     }
 
     render() {
         return (
             <div>
-                <form>
+                <div>
                     <label>
-                        비밀번호 <input value={this.state.value} onChange={this.ChangeValue}/>
+                        비밀번호 <input type="password" value={this.props.pwd} onChange={this.changePwd} />
                     </label>
-                </form>
-                {this.ValidatePwd(this.state.value)}
+                    {renderMessageIfExist(this.state.pwdErrmsg)}
+                </div>
+                <div>
+                    <label>
+                        비밀번호확인 <input type="password" onChange={this.validateConfirm} />
+                    </label>
+                    {renderMessageIfExist(this.state.confirmErrmsg)}
+                </div>
             </div>
         );
     }

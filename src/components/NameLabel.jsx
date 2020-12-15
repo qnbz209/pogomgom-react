@@ -2,25 +2,20 @@ import React from 'react';
 
 class NameLabel extends React.Component {
     constructor(props) {
-        super(props)
-        this.state = {
-            value: ''
-        };
-        this.ChangeValue = this.ChangeValue.bind(this);
+        super(props);
+        this.changeName = this.changeName.bind(this);
     }
 
-    ChangeValue(input) {
-        this.setState({value: input.target.value})
+    changeName(event) {
+        this.props.handleAppState('name', event.target.value);
     }
 
     render() {
         return (
             <div>
-                <form>
-                    <label>
-                        이름 <input value={this.state.value} onChange={this.ChangeValue}/>
-                    </label>
-                </form>
+                <label>
+                    이름 <input value={this.props.name} onChange={this.changeName} />
+                </label>
             </div>
         );
     }
