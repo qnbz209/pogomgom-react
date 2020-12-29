@@ -17,9 +17,8 @@ class Signup extends React.Component {
             isConfirmValid: false,
             isPhoneValid: false,
             isEmailValid: false,
-            adAgree: null,
-            allValid: false
-        }
+            fetchSuccess: false
+        };
         this.setStateWithKey = this.setStateWithKey.bind(this);
     }
 
@@ -31,10 +30,27 @@ class Signup extends React.Component {
 
     render() {
         const { isIDValid, isPwdValid, isConfirmValid, isPhoneValid, isEmailValid } = this.state;
-        const isAdValid = this.state.adAgree !== null;
+        const isAdValid = this.props.ad !== '';
         const isNameValid = this.props.name !== '';
         const isAllValid = isIDValid && isPwdValid && isConfirmValid && isPhoneValid && isEmailValid && isAdValid && isNameValid;
         
+        var requestBody = JSON.stringify({
+            id: this.props.id,
+            password: this.props.pwd,
+            name: this.props.name,
+            phoneAddress: this.props.phone,
+            emailAddress: this.props.email,
+            advertisement: this.props.ad
+        });
+
+        const requestOptions = {
+            method: 'POST',
+            body: requestBody,
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        };
+
         return (
             <div>
                 <IDLabel
@@ -58,10 +74,15 @@ class Signup extends React.Component {
                     handleAppState={this.props.changeParentState}
                     validate={this.setStateWithKey} />
                 <AdButton
-                    validate={this.setStateWithKey} />
-                <ConditionalLink to="/signup-success" condition={isAllValid}>
+                    handleAppState={this.props.changeParentState} />
+                <ConditionalLink
+                    to="/success"
+                    condition={this.state.fetchSuccess}>
                     <JoinButton
-                        valid = {isAllValid} />
+                        fetchSuccess={this.state.fetchSuccess}
+                        requestOptions={requestOptions}
+                        valid={isAllValid}
+                        validate={this.setStateWithKey} />
                 </ConditionalLink>
             </div>
         )

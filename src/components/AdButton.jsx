@@ -8,9 +8,7 @@ class AdButton extends React.Component {
 
     changeAd(event) {
         const value = event.target.value;
-        this.props.validate('adAgree', value === "true"
-                                     ? true : ((value === "false")
-                                     ? false : null));
+        this.props.handleAppState('ad', value);
     }
 
     render() {

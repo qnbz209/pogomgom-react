@@ -13,7 +13,8 @@ class App extends React.Component {
       pwd: '',
       name: '',
       phone: '',
-      email: ''
+      email: '',
+      ad: ''
     }
     this.setStateWithKey = this.setStateWithKey.bind(this);
   }
@@ -39,9 +40,10 @@ class App extends React.Component {
                 name={this.state.name}
                 phone={this.state.phone}
                 email={this.state.email}
+                ad={this.state.ad}
                 changeParentState={this.setStateWithKey} />
             </Route>
-            <Route path="/signup-success">
+            <Route path="/success">
               <SignupSuccess
                 id={this.state.id}
                 name={this.state.name} />
