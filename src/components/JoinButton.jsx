@@ -1,5 +1,5 @@
 import React from 'react';
-import postData from './PostData';
+import getFetchStatus from '../utils/GetFetchStatus';
 
 class JoinButton extends React.Component {
     constructor(props) {
@@ -12,14 +12,18 @@ class JoinButton extends React.Component {
             alert('위의 조건들을 다 만족시켜야해');
         }
         else {
-            var status = await postData('/signup', this.props.requestOptions);
+            var status = await getFetchStatus('/signup', this.props.requestOptions);
 
-            if (status === 200)
-                this.props.validate('fetchSuccess', true);
-            else if (status === 500)
+            if (status === 200) {
+                window.history.replaceState({}, '', "/success");
+                window.history.forward();
+            }
+            else if (status === 500) {
                 alert('Error while signup');
-            else
+            }
+            else {
                 alert('회원가입 폼에 없는 항목이 있습니다.');
+            }
         }
     }
 

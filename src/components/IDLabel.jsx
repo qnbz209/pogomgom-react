@@ -1,5 +1,5 @@
 import React from 'react';
-import postData from './PostData';
+import getFetchStatus from '../utils/GetFetchStatus';
 
 class IDLabel extends React.Component {
     constructor(props) {
@@ -23,7 +23,7 @@ class IDLabel extends React.Component {
             this.props.validate('isIDValid', false);
         }
         else {
-            if (await postData(url, requestOptions) === 200) {
+            if (await getFetchStatus(url, requestOptions) === 200) {
                 this.props.validate('isIDValid', true);
                 alert('사용 가능한 아이디입니다!');
             }

@@ -6,7 +6,6 @@ import PhoneLabel from '../components/PhoneLabel';
 import EmailLabel from '../components/EmailLabel';
 import AdButton from '../components/AdButton';
 import JoinButton from '../components/JoinButton';
-import ConditionalLink from '../components/ConditionalLink';
 
 class Signup extends React.Component {
     constructor(props) {
@@ -16,8 +15,7 @@ class Signup extends React.Component {
             isPwdValid: false,
             isConfirmValid: false,
             isPhoneValid: false,
-            isEmailValid: false,
-            fetchSuccess: false
+            isEmailValid: false
         };
         this.setStateWithKey = this.setStateWithKey.bind(this);
     }
@@ -75,15 +73,9 @@ class Signup extends React.Component {
                     validate={this.setStateWithKey} />
                 <AdButton
                     handleAppState={this.props.changeParentState} />
-                <ConditionalLink
-                    to="/success"
-                    condition={this.state.fetchSuccess}>
-                    <JoinButton
-                        fetchSuccess={this.state.fetchSuccess}
-                        requestOptions={requestOptions}
-                        valid={isAllValid}
-                        validate={this.setStateWithKey} />
-                </ConditionalLink>
+                <JoinButton
+                    requestOptions={requestOptions}
+                    valid={isAllValid} />
             </div>
         )
     }
