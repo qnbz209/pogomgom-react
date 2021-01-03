@@ -15,8 +15,8 @@ class JoinButton extends React.Component {
             var status = await getFetchStatus('/signup', this.props.requestOptions);
 
             if (status === 200) {
-                window.history.replaceState({}, '', "/success");
-                window.history.forward();
+                window.history.pushState({}, '', '/success');
+                window.history.go(0);
             }
             else if (status === 500) {
                 alert('Error while signup');

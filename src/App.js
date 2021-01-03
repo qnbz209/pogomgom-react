@@ -2,29 +2,10 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter, Route , Switch } from 'react-router-dom';
 import Home from './pages/Home';
-import Signup from './pages/Signup';
-import SignupSuccess from './pages/SignupSuccess';
+import SignupContainer from './containers/SignupContainer';
+import SuccessConatiner from './containers/SuccessContainer';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: '',
-      pwd: '',
-      name: '',
-      phone: '',
-      email: '',
-      ad: ''
-    }
-    this.setStateWithKey = this.setStateWithKey.bind(this);
-  }
-
-  setStateWithKey(key, value) {
-    this.setState({
-      [key]: value
-    })
-  }
-
   render() {
     return (
       <div>
@@ -34,19 +15,10 @@ class App extends React.Component {
               <Home />
             </Route>
             <Route path="/signup">
-              <Signup
-                id={this.state.id}
-                pwd={this.state.pwd}
-                name={this.state.name}
-                phone={this.state.phone}
-                email={this.state.email}
-                ad={this.state.ad}
-                changeParentState={this.setStateWithKey} />
+              <SignupContainer />
             </Route>
             <Route path="/success">
-              <SignupSuccess
-                id={this.state.id}
-                name={this.state.name} />
+              <SuccessConatiner />
             </Route>
           </Switch>
         </BrowserRouter>
