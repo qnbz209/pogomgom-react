@@ -16,7 +16,7 @@ class IDLabel extends React.Component {
 
     async validateID() {
         const value = this.props.id;
-        const url = '/signup/id?id=' + value;
+        const url = 'http://ec2-18-221-142-60.us-east-2.compute.amazonaws.com:3000/signup/id?id=' + value;
         const requestOptions = {method: 'POST'};
 
         if (value.length === 0) {
