@@ -1,5 +1,5 @@
 import React from 'react';
-import renderMessageIfExist from './RenderMessage';
+import renderMessageIfExist from '../utils/RenderMessage';
 
 class PhoneLabel extends React.Component {
     constructor(props) {

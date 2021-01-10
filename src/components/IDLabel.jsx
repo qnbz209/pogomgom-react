@@ -1,12 +1,9 @@
 import React from 'react';
-import renderMessageIfExist from './RenderMessage';
+import getFetchStatus from '../utils/GetFetchStatus';
 
 class IDLabel extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            errmsg: ''
-        };
         this.changeID = this.changeID.bind(this);
         this.validateID = this.validateID.bind(this);
     }
@@ -14,29 +11,26 @@ class IDLabel extends React.Component {
     changeID(event) {
         const value = event.target.value;
         this.props.handleAppState('id', value);
-        this.validateID(value);
+        this.props.validate('isIDValid', false);
     }
 
-    validateID(input) {
-        if (input.length > 0) {
-            if (input === 'qnbz209') {
-                this.setState({
-                    errmsg: '이미 존재하는 아이디에요'
-                });
-                this.props.validate('isIDValid', false);
-            }
-            else {
-                this.setState({
-                    errmsg: ''
-                });
-                this.props.validate('isIDValid', true);
-            }
+    async validateID() {
+        const value = this.props.id;
+        const url = 'http://ec2-18-221-142-60.us-east-2.compute.amazonaws.com:3000/signup/id?id=' + value;
+        const requestOptions = {method: 'POST'};
+
+        if (value.length === 0) {
+            this.props.validate('isIDValid', false);
         }
         else {
-            this.setState({
-                errmsg: ''
-            });
-            this.props.validate('isIDValid', true);
+            if (await getFetchStatus(url, requestOptions) === 200) {
+                this.props.validate('isIDValid', true);
+                alert('사용 가능한 아이디입니다!');
+            }
+            else {
+                this.props.validate('isIDValid', false);
+                alert('이미 존재하는 아이디입니다!');
+            }
         }
     }
 
@@ -46,7 +40,9 @@ class IDLabel extends React.Component {
                 <label>
                     아이디 <input value={this.props.id} onChange={this.changeID}/>
                 </label>
-                {renderMessageIfExist(this.state.errmsg)}
+                <button onClick={this.validateID}>
+                    중복확인
+                </button>
             </div>
         );
     }
