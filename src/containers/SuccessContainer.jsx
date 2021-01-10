@@ -15,6 +15,6 @@ const SuccessContainer = ({
 export default connect(
     state => ({
         id: state.reducer.id,
-        name: state.reducer.name,
+        name: state.reducer.name
     }),
 )(SuccessContainer);

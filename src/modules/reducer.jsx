@@ -2,21 +2,18 @@ const CHANGE_INPUT = 'reducer/CHANGE_INPUT';
 
 const initalState = {
     id: '',
-    pwd: '',
-    name: '',
-    phone: '',
-    email: '',
-    ad: null
+    name: ''
 };
 
-export const changeInput = (key, input) => ({type: CHANGE_INPUT, key, input});
+export const changeInput = (input) => ({type: CHANGE_INPUT, input});
 
 function reducer(state = initalState, action) {
     switch (action.type) {
         case CHANGE_INPUT:
             return {
                 ...state,
-                [action.key]: action.input
+                id: action.input.id,
+                name: action.input.name
             };
         default:
             return state;

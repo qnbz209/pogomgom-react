@@ -15,7 +15,7 @@ class PwdLabel extends React.Component {
 
     changePwd(event) {
         const value = event.target.value;
-        this.props.handleAppState('pwd', value);
+        this.props.setStateWithKey('pwd', value);
         this.validatePwd(value);
     }
 
@@ -25,30 +25,30 @@ class PwdLabel extends React.Component {
                 this.setState({
                     pwdErrmsg: '비밀번호는 8자 이상'
                 });
-                this.props.validate('isPwdValid', false);
+                this.props.setStateWithKey('isPwdValid', false);
             } else if ((input.match(/[a-z]/g) || []).length === 0) {
                 this.setState({
                     pwdErrmsg: '영어도 포함시켜줘'
                 });
-                this.props.validate('isPwdValid', false);
+                this.props.setStateWithKey('isPwdValid', false);
             } else if ((input.match(/[0-9]/g) || []).length === 0) {
                 this.setState({
                     pwdErrmsg: '숫자도 포함시켜줘'
                 });
-                this.props.validate('isPwdValid', false);
+                this.props.setStateWithKey('isPwdValid', false);
             }
             else {
                 this.setState({
                     pwdErrmsg: ''
                 });
-                this.props.validate('isPwdValid', true);
+                this.props.setStateWithKey('isPwdValid', true);
             }
         }
         else {
             this.setState({
                 pwdErrmsg: ''
             });
-            this.props.validate('isPwdValid', false);
+            this.props.setStateWithKey('isPwdValid', false);
         }
     }
 
@@ -60,20 +60,20 @@ class PwdLabel extends React.Component {
                 this.setState({
                     confirmErrmsg: ''
                 });
-                this.props.validate('isConfirmValid', true);
+                this.props.setStateWithKey('isConfirmValid', true);
             }
             else {
                 this.setState({
                     confirmErrmsg: '비밀번호랑 똑같이'
                 });
-                this.props.validate('isConfirmValid', false);
+                this.props.setStateWithKey('isConfirmValid', false);
             }
         }
         else {
             this.setState({
                 confirmErrmsg: ''
             });
-            this.props.validate('isConfirmValid', false);
+            this.props.setStateWithKey('isConfirmValid', false);
         }
     }
 

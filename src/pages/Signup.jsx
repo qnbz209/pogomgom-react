@@ -11,6 +11,12 @@ class Signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
+            pwd: '',
+            name: '',
+            phone: '',
+            email: '',
+            ad: '',
             isIDValid: false,
             isPwdValid: false,
             isConfirmValid: false,
@@ -28,17 +34,17 @@ class Signup extends React.Component {
 
     render() {
         const { isIDValid, isPwdValid, isConfirmValid, isPhoneValid, isEmailValid } = this.state;
-        const isAdValid = this.props.ad !== '';
-        const isNameValid = this.props.name !== '';
+        const isAdValid = this.state.ad !== '';
+        const isNameValid = this.state.name !== '';
         const isAllValid = isIDValid && isPwdValid && isConfirmValid && isPhoneValid && isEmailValid && isAdValid && isNameValid;
         
         var requestBody = JSON.stringify({
-            id: this.props.id,
-            password: this.props.pwd,
-            name: this.props.name,
-            phoneAddress: this.props.phone,
-            emailAddress: this.props.email,
-            advertisement: this.props.ad
+            id: this.state.id,
+            password: this.state.pwd,
+            name: this.state.name,
+            phoneAddress: this.state.phone,
+            emailAddress: this.state.email,
+            advertisement: this.state.ad
         });
 
         const requestOptions = {
@@ -52,30 +58,28 @@ class Signup extends React.Component {
         return (
             <div>
                 <IDLabel
-                    id={this.props.id}
-                    handleAppState={this.props.changeParentState}
-                    validate={this.setStateWithKey} />
+                    id={this.state.id}
+                    setStateWithKey={this.setStateWithKey} />
                 <PwdLabel
-                    pwd={this.props.pwd}
-                    handleAppState={this.props.changeParentState}
-                    validate={this.setStateWithKey} />
+                    pwd={this.state.pwd}
+                    setStateWithKey={this.setStateWithKey} />
                 <NameLabel
-                    name={this.props.name}
-                    handleAppState={this.props.changeParentState}
-                    validate={this.setStateWithKey} />
+                    name={this.state.name}
+                    setStateWithKey={this.setStateWithKey} />
                 <PhoneLabel
-                    phone={this.props.phone}
-                    handleAppState={this.props.changeParentState}
-                    validate={this.setStateWithKey} />
+                    phone={this.state.phone}
+                    setStateWithKey={this.setStateWithKey} />
                 <EmailLabel
-                    email={this.props.email}
-                    handleAppState={this.props.changeParentState}
-                    validate={this.setStateWithKey} />
+                    email={this.state.email}
+                    setStateWithKey={this.setStateWithKey} />
                 <AdButton
-                    handleAppState={this.props.changeParentState} />
+                    setStateWithKey={this.setStateWithKey} />
                 <JoinButton
                     requestOptions={requestOptions}
-                    valid={isAllValid} />
+                    valid={isAllValid}
+                    id={this.state.id}
+                    name={this.state.name}
+                    signup={this.props.changeInput}/>
             </div>
         )
     }
