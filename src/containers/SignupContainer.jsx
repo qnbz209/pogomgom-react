@@ -14,7 +14,7 @@ const SignupContainer = ({
             phone = {phone}
             email = {email}
             ad = {ad}
-            changeParentState = {changeInput} />
+            changeParentState = {changeInput}/>
     );
 };
 

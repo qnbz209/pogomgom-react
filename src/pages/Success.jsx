@@ -13,7 +13,6 @@ class Success extends React.Component {
         const { name, id } = this.props;
         const dateToLocaleString = this.state.date.toLocaleString();
         return (
-
             <div>
                 <div>
                     감사합니다! {name}님!

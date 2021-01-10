@@ -11,15 +11,9 @@ class App extends React.Component {
       <div>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/signup">
-              <SignupContainer />
-            </Route>
-            <Route path="/success">
-              <SuccessConatiner />
-            </Route>
+            <Route exact path="/" component={Home}/> 
+            <Route path="/signup" component={SignupContainer}/>
+            <Route path="/success" component={SuccessConatiner}/>
           </Switch>
         </BrowserRouter>
       </div>
