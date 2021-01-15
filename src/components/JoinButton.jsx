@@ -1,6 +1,6 @@
 import React from 'react';
 import getFetchStatus from '../utils/GetFetchStatus';
-import signup_url from '../constants/SignupUrl';
+import SIGNUP_URL from '../constants/Signup';
 import { withRouter } from 'react-router-dom';
 
 class JoinButton extends React.Component {
@@ -14,8 +14,7 @@ class JoinButton extends React.Component {
             alert('위의 조건들을 다 만족시켜야해');
         }
         else {
-            const url = signup_url + 'signup'
-            var status = await getFetchStatus(url, this.props.requestOptions);
+            var status = await getFetchStatus(SIGNUP_URL + 'signup', this.props.requestOptions);
 
             if (status === 200) {
                 this.props.signup({id: this.props.id, name: this.props.name});

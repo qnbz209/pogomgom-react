@@ -1,6 +1,6 @@
 import React from 'react';
 import getFetchStatus from '../utils/GetFetchStatus';
-import signup_url from '../constants/SignupUrl';
+import SIGNUP_URL from '../constants/Signup';
 
 class IDLabel extends React.Component {
     constructor(props) {
@@ -17,14 +17,13 @@ class IDLabel extends React.Component {
 
     async validateID() {
         const value = this.props.id;
-        const url = signup_url + 'signup/id?id=' + value;
         const requestOptions = {method: 'POST'};
 
         if (value.length === 0) {
             this.props.setStateWithKey('isIDValid', false);
         }
         else {
-            if (await getFetchStatus(url, requestOptions) === 200) {
+            if (await getFetchStatus(SIGNUP_URL + 'signup/id?id=' + value, requestOptions) === 200) {
                 this.props.setStateWithKey('isIDValid', true);
                 alert('사용 가능한 아이디입니다!');
             }
