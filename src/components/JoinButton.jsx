@@ -1,24 +1,20 @@
-import React from 'react';
 import getFetchStatus from '../utils/GetFetchStatus';
+import { useHistory, withRouter } from 'react-router-dom';
 import SIGNUP_URL from '../constants/Signup';
-import { withRouter } from 'react-router-dom';
 
-class JoinButton extends React.Component {
-    constructor(props) {
-        super(props);
-        this.checkJoin = this.checkJoin.bind(this);
-    }
-
-    async checkJoin() {
-        if (!this.props.valid) {
+function JoinButton(props) {
+    let history = useHistory();
+    
+    async function checkJoin() {
+        if (!props.valid) {
             alert('위의 조건들을 다 만족시켜야해');
         }
         else {
-            var status = await getFetchStatus(SIGNUP_URL + 'signup', this.props.requestOptions);
+            var status = await getFetchStatus(SIGNUP_URL + 'signup', props.requestOptions);
 
             if (status === 200) {
-                this.props.signup({id: this.props.id, name: this.props.name});
-                this.props.history.push('/success');
+                props.signup({id: props.id, name: props.name});
+                history.push('/success');
             }
             else if (status === 500) {
                 alert('Error while signup');
@@ -29,15 +25,13 @@ class JoinButton extends React.Component {
         }
     }
 
-    render() {
-        return (
-            <div>
-                <button onClick={this.checkJoin}>
-                    가입
-                </button>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <button onClick={checkJoin}>
+                가입
+            </button>
+        </div>
+    );
 }
 
 export default withRouter(JoinButton);

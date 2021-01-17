@@ -1,54 +1,39 @@
-import React from 'react';
+import { useState } from 'react';
 import renderMessageIfExist from '../utils/RenderMessage';
 
-class PhoneLabel extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            errmsg: ''
-        };
-        this.changePhone = this.changePhone.bind(this);
-        this.checkPhone= this.validatePhone.bind(this);
+function PhoneLabel(props) {
+    const [errmsg, setErrmsg] = useState('');
+
+    function changePhone(event) {
+        props.setStateWithKey('phone', event.target.value);
+        validatePhone(event.target.value);
     }
 
-    changePhone(event) {
-        this.props.setStateWithKey('phone', event.target.value);
-        this.validatePhone(event.target.value);
-    }
-
-    validatePhone(input) {
+    function validatePhone(input) {
         if (input.length > 0) {
             if ((input.match(/[0-9]/g) || []).length === 0) {
-                this.setState({
-                    errmsg: '전화번호는 숫자로만 이루어져있어요'
-                });
-                this.props.setStateWithKey('isPhoneValid', false);
+                setErrmsg('전화번호는 숫자로만 이루어져있어요');
+                props.setStateWithKey('isPhoneValid', false);
             }
             else {
-                this.setState({
-                    errmsg: ''
-                });
-                this.props.setStateWithKey('isPhoneValid', true);
+                setErrmsg('');
+                props.setStateWithKey('isPhoneValid', true);
             }
         }
         else {
-            this.setState({
-                errmsg: ''
-            });
-            this.props.setStateWithKey('isPhoneValid', false);
+            setErrmsg('');
+            props.setStateWithKey('isPhoneValid', false);
         }
     }
 
-    render() {
-        return (
-            <div>
-                <label>
-                    전화번호 <input value={this.props.phone} onChange={this.changePhone} />
-                </label>
-                {renderMessageIfExist(this.state.errmsg)}
-            </div>
-        );
-    }
+    return (
+        <div>
+            <label>
+                전화번호 <input value={props.phone} onChange={changePhone} />
+            </label>
+            {renderMessageIfExist(errmsg)}
+        </div>
+    );
 }
 
 export default PhoneLabel;

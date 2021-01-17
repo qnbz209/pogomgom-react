@@ -1,24 +1,15 @@
-import React from 'react';
-
-class NameLabel extends React.Component {
-    constructor(props) {
-        super(props);
-        this.changeName = this.changeName.bind(this);
+function NameLabel(props) {
+    function changeName(event) {
+        props.setStateWithKey('name', event.target.value);
     }
 
-    changeName(event) {
-        this.props.setStateWithKey('name', event.target.value);
-    }
-
-    render() {
-        return (
-            <div>
-                <label>
-                    이름 <input value={this.props.name} onChange={this.changeName} />
-                </label>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <label>
+                이름 <input value={props.name} onChange={changeName} />
+            </label>
+        </div>
+    );
 }
 
 export default NameLabel;

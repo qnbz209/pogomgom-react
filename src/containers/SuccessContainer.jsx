@@ -1,6 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
 import Success from '../pages/Success';
+import { connect } from 'react-redux';
 
 const SuccessContainer = ({
     id, name

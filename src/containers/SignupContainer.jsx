@@ -1,6 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
 import Signup from '../pages/Signup';
+import { connect } from 'react-redux';
 import { changeInput } from '../modules/reducer';
 
 const SignupContainer = ({
