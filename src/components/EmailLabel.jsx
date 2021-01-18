@@ -13,7 +13,7 @@ class EmailLabel extends React.Component {
 
     changeEmail(event) {
         const value = event.target.value;
-        this.props.handleAppState('email', value);
+        this.props.setStateWithKey('email', value);
         this.validateEmail(value);
     }
 
@@ -23,20 +23,20 @@ class EmailLabel extends React.Component {
                 this.setState({
                     errmsg: '이메일 양식 맞춰주세요'
                 });
-                this.props.validate('isEmailValid', false);
+                this.props.setStateWithKey('isEmailValid', false);
             }
             else {
                 this.setState({
                     errmsg: ''
                 });
-                this.props.validate('isEmailValid', true);
+                this.props.setStateWithKey('isEmailValid', true);
             }
         }
         else {
             this.setState({
                 errmsg: ''
             });
-            this.props.validate('isEmailValid', false);
+            this.props.setStateWithKey('isEmailValid', false);
         }
     }
     

@@ -1,6 +1,6 @@
 import React from 'react';
 
-class SignupSuccess extends React.Component {
+class Success extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -13,7 +13,6 @@ class SignupSuccess extends React.Component {
         const { name, id } = this.props;
         const dateToLocaleString = this.state.date.toLocaleString();
         return (
-
             <div>
                 <div>
                     감사합니다! {name}님!
@@ -26,4 +25,4 @@ class SignupSuccess extends React.Component {
     }
 }
 
-export default SignupSuccess;
+export default Success;

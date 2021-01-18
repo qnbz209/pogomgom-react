@@ -8,7 +8,7 @@ class AdButton extends React.Component {
 
     changeAd(event) {
         const value = event.target.value;
-        this.props.handleAppState('ad', value);
+        this.props.setStateWithKey('ad', value);
     }
 
     render() {

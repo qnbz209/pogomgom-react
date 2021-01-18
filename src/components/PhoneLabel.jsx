@@ -12,7 +12,7 @@ class PhoneLabel extends React.Component {
     }
 
     changePhone(event) {
-        this.props.handleAppState('phone', event.target.value);
+        this.props.setStateWithKey('phone', event.target.value);
         this.validatePhone(event.target.value);
     }
 
@@ -22,20 +22,20 @@ class PhoneLabel extends React.Component {
                 this.setState({
                     errmsg: '전화번호는 숫자로만 이루어져있어요'
                 });
-                this.props.validate('isPhoneValid', false);
+                this.props.setStateWithKey('isPhoneValid', false);
             }
             else {
                 this.setState({
                     errmsg: ''
                 });
-                this.props.validate('isPhoneValid', true);
+                this.props.setStateWithKey('isPhoneValid', true);
             }
         }
         else {
             this.setState({
                 errmsg: ''
             });
-            this.props.validate('isPhoneValid', false);
+            this.props.setStateWithKey('isPhoneValid', false);
         }
     }
 
