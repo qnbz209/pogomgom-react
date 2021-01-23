@@ -1,8 +1,12 @@
+import { useCallback } from "react";
+
 function AdButton(props) {
-    function changeAd(event) {
+    const setStateWithKey = props.setStateWithKey;
+
+    const changeAd = useCallback((event) => {
         const value = event.target.value;
-        props.setStateWithKey('ad', value);
-    }
+        setStateWithKey('ad', value);
+    }, [setStateWithKey]);
 
     return (
         <div>

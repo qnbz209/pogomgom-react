@@ -1,36 +1,37 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import renderMessageIfExist from '../utils/RenderMessage';
 
 function EmailLabel(props) {
+    const { email, setStateWithKey } = props;
     const [errmsg, setErrmsg] = useState('');
 
-    function changeEmail(event) {
-        const value = event.target.value;
-        props.setStateWithKey('email', value);
-        validateEmail(value);
-    }
-
-    function validateEmail(input) {
+    const validateEmail = useCallback((input) => {
         if (input.length > 0) {
             if ((input.match(/@/) || []).length === 0) {
                 setErrmsg('이메일 양식 맞춰주세요');
-                props.setStateWithKey('isEmailValid', false);
+                setStateWithKey('isEmailValid', false);
             }
             else {
                 setErrmsg('');
-                props.setStateWithKey('isEmailValid', true);
+                setStateWithKey('isEmailValid', true);
             }
         }
         else {
             setErrmsg('');
-            props.setStateWithKey('isEmailValid', false);
+            setStateWithKey('isEmailValid', false);
         }
-    }
+    }, [setErrmsg, setStateWithKey]);
+
+    const changeEmail = useCallback((event) => {
+        const value = event.target.value;
+        setStateWithKey('email', value);
+        validateEmail(value);
+    }, [setStateWithKey, validateEmail]);
     
     return (
         <div>
             <label>
-                이메일 <input value={props.email} onChange={changeEmail} />
+                이메일 <input value={email} onChange={changeEmail} />
             </label>
             {renderMessageIfExist(errmsg)}
         </div>

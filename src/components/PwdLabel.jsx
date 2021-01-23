@@ -1,62 +1,63 @@
-import { useState} from 'react';
+import { useState, useCallback } from 'react';
 import renderMessageIfExist from '../utils/RenderMessage';
 
 function PwdLabel(props) {
     const [pwdErrmsg, setPwdErrmsg] = useState('');
     const [confirmErrmsg, setConfirmErrmsg] = useState('');
+    const { pwd, setStateWithKey } = props;
 
-    function changePwd(event) {
-        const value = event.target.value;
-        props.setStateWithKey('pwd', value);
-        validatePwd(value);
-    }
-
-    function validatePwd(input) {
+    const validatePwd = useCallback((input) => {
         if (input.length > 0) {
             if (input.length < 8) {
                 setPwdErrmsg('비밀번호는 8자 이상');
-                props.setStateWithKey('isPwdValid', false);
+                setStateWithKey('isPwdValid', false);
             } else if ((input.match(/[a-z]/g) || []).length === 0) {
                 setPwdErrmsg('영어도 포함시켜줘');
-                props.setStateWithKey('isPwdValid', false);
+                setStateWithKey('isPwdValid', false);
             } else if ((input.match(/[0-9]/g) || []).length === 0) {
                 setPwdErrmsg('숫자도 포함시켜줘');
-                props.setStateWithKey('isPwdValid', false);
+                setStateWithKey('isPwdValid', false);
             }
             else {
                 setPwdErrmsg('');
-                props.setStateWithKey('isPwdValid', true);
+                setStateWithKey('isPwdValid', true);
             }
         }
         else {
             setPwdErrmsg('');
-            props.setStateWithKey('isPwdValid', false);
+            setStateWithKey('isPwdValid', false);
         }
-    }
+    }, [setPwdErrmsg, setStateWithKey]);
 
-    function validateConfirm(event) {
+    const changePwd = useCallback((event) => {
+        const value = event.target.value;
+        setStateWithKey('pwd', value);
+        validatePwd(value);
+    }, [setStateWithKey, validatePwd]);
+
+    const validateConfirm = useCallback((event) => {
         const input = event.target.value;
         if (input.length > 0) {
-            if (input === props.pwd) {
+            if (input === pwd) {
                 setConfirmErrmsg('');
-                props.setStateWithKey('isConfirmValid', true);
+                setStateWithKey('isConfirmValid', true);
             }
             else {
                 setConfirmErrmsg('비밀번호랑 똑같이');
-                props.setStateWithKey('isConfirmValid', false);
+                setStateWithKey('isConfirmValid', false);
             }
         }
         else {
             setConfirmErrmsg('');
-            props.setStateWithKey('isConfirmValid', false);
+            setStateWithKey('isConfirmValid', false);
         }
-    }
+    }, [pwd, setConfirmErrmsg, setStateWithKey]);
 
     return (
         <div>
             <div>
                 <label>
-                    비밀번호 <input type="password" value={props.pwd} onChange={changePwd} />
+                    비밀번호 <input type="password" value={pwd} onChange={changePwd} />
                 </label>
                 {renderMessageIfExist(pwdErrmsg)}
             </div>
