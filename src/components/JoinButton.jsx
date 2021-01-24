@@ -1,10 +1,9 @@
 import getFetchStatus from '../utils/GetFetchStatus';
-import { useHistory, withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import SIGNUP_URL from '../constants/Signup';
 import { useCallback } from 'react';
 
-function JoinButton(props) {
-    const { requestOptions, signup, id, name, valid } = props;
+function JoinButton({ requestOptions, signup, id, name, valid }) {
     let history = useHistory();
     
     const checkJoin = useCallback(async () => {
@@ -36,4 +35,4 @@ function JoinButton(props) {
     );
 }
 
-export default withRouter(JoinButton);
+export default JoinButton;

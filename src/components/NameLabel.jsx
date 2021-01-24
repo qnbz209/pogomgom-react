@@ -1,8 +1,6 @@
 import { useCallback } from "react";
 
-function NameLabel(props) {
-    const { name, setStateWithKey } = props;
-    
+function NameLabel({ name, setStateWithKey }) {
     const changeName = useCallback((event) => {
         setStateWithKey('name', event.target.value);
     }, [setStateWithKey]);

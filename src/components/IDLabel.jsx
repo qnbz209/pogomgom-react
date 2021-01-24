@@ -2,9 +2,7 @@ import getFetchStatus from '../utils/GetFetchStatus';
 import SIGNUP_URL from '../constants/Signup';
 import { useCallback } from 'react';
 
-function IDLabel(props) {
-    const { id, setStateWithKey } = props;
-
+function IDLabel({ id, setStateWithKey }) {
     const changeID = useCallback((event) => {
         const value = event.target.value;
         setStateWithKey('id', value);
@@ -13,7 +11,6 @@ function IDLabel(props) {
 
     const validateID = useCallback(async () => {
         const requestOptions = {method: 'POST'};
-
         if (id.length === 0) {
             setStateWithKey('isIDValid', false);
         }
@@ -36,7 +33,7 @@ function IDLabel(props) {
             </label>
             <button onClick={validateID}>
                 중복확인
-                </button>
+            </button>
         </div>
     );
 }
