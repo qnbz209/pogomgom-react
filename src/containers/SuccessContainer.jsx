@@ -1,19 +1,14 @@
 import Success from '../pages/Success';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-const SuccessContainer = ({
-    id, name
-}) => {
+function SuccessContainer() {
+    const state = useSelector((state) => state.reducer);
+
     return (
         <Success
-            id = {id}
-            name = {name} />
+            id = {state.id}
+            name = {state.name} />
     );
 };
 
-export default connect(
-    state => ({
-        id: state.reducer.id,
-        name: state.reducer.name
-    }),
-)(SuccessContainer);
+export default SuccessContainer;
