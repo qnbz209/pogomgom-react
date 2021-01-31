@@ -1,4 +1,4 @@
-function renderMessageIfExist(message) {
+function renderMessageIfExist(message : string) {
     return message === null ? null : message;
 }
 

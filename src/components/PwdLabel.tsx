@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react';
 import renderMessageIfExist from '../utils/RenderMessage';
+import { PwdInformation } from './Interfaces';
 
-function PwdLabel({ pwd, setStateWithKey }) {
+function PwdLabel({ pwd, setStateWithKey } : PwdInformation) {
     const [pwdErrorMessage, setPwdErrorMessage] = useState('');
     const [confirmErrorMessage, setConfirmErrorMessage] = useState('');
 

@@ -6,8 +6,9 @@ import PhoneLabel from '../components/PhoneLabel';
 import EmailLabel from '../components/EmailLabel';
 import AdButton from '../components/AdButton';
 import JoinButton from '../components/JoinButton';
+import { SignupInformation } from '../components/Interfaces';
 
-function Signup(props) {
+function Signup({ changeInput }: SignupInformation) {
     const [id, setID] = useState('');
     const [pwd, setPwd] = useState('');
     const [name, setName] = useState('');
@@ -23,7 +24,7 @@ function Signup(props) {
     const isAdValid = (ad !== '');
     const isAllValid = (isIDValid && isPwdValid && isConfirmValid && isPhoneValid && isEmailValid && isAdValid && isNameValid);
 
-    function setStateWithKey(key, value) {
+    function setStateWithKey(key : string, value : string & boolean) {
         switch (key) {
             case 'id':
                 setID(value);
@@ -72,7 +73,7 @@ function Signup(props) {
         advertisement: ad
     });
 
-    const requestOptions = {
+    const requestOptions : RequestInit = {
         method: 'POST',
         body: requestBody,
         headers: {
@@ -104,7 +105,7 @@ function Signup(props) {
                 valid={isAllValid}
                 id={id}
                 name={name}
-                signup={props.changeInput} />
+                signup={changeInput} />
         </div>
     )
 }

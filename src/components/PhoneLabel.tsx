@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react';
 import renderMessageIfExist from '../utils/RenderMessage';
+import { PhoneInformation } from './Interfaces';
 
-function PhoneLabel({ phone, setStateWithKey }) {
+function PhoneLabel({ phone, setStateWithKey } : PhoneInformation) {
     const [errorMessage, setErrorMessage] = useState('');
 
     const validatePhone = useCallback((input) => {

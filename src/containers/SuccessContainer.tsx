@@ -1,8 +1,9 @@
 import Success from '../pages/Success';
 import { useSelector } from 'react-redux';
+import { RootReducer } from '../modules/reducer';
 
 function SuccessContainer() {
-    const state = useSelector((state) => state.reducer);
+    const state = useSelector((state : RootReducer) => state.reducer);
 
     return (
         <Success

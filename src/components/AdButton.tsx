@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
+import { AdInformation } from './Interfaces';
 
-function AdButton({ setStateWithKey }) {
+function AdButton({ setStateWithKey } : AdInformation) {
     const changeAd = useCallback((event) => {
         const value = event.target.value;
         setStateWithKey('ad', value);

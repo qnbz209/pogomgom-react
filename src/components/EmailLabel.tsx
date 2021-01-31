@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react';
 import renderMessageIfExist from '../utils/RenderMessage';
+import { EmailInformation } from './Interfaces';
 
-function EmailLabel({ email, setStateWithKey }) {
+function EmailLabel({ email, setStateWithKey } : EmailInformation) {
     const [errorMessage, setErrorMessage] = useState('');
 
     const validateEmail = useCallback((input) => {
