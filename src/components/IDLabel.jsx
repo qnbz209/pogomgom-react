@@ -1,51 +1,41 @@
-import React from 'react';
 import getFetchStatus from '../utils/GetFetchStatus';
 import SIGNUP_URL from '../constants/Signup';
+import { useCallback } from 'react';
 
-class IDLabel extends React.Component {
-    constructor(props) {
-        super(props)
-        this.changeID = this.changeID.bind(this);
-        this.validateID = this.validateID.bind(this);
-    }
-
-    changeID(event) {
+function IDLabel({ id, setStateWithKey }) {
+    const changeID = useCallback((event) => {
         const value = event.target.value;
-        this.props.setStateWithKey('id', value);
-        this.props.setStateWithKey('isIDValid', false);
-    }
+        setStateWithKey('id', value);
+        setStateWithKey('isIDValid', false);
+    }, [setStateWithKey]);
 
-    async validateID() {
-        const value = this.props.id;
+    const validateID = useCallback(async () => {
         const requestOptions = {method: 'POST'};
-
-        if (value.length === 0) {
-            this.props.setStateWithKey('isIDValid', false);
+        if (id.length === 0) {
+            setStateWithKey('isIDValid', false);
         }
         else {
-            if (await getFetchStatus(SIGNUP_URL + 'signup/id?id=' + value, requestOptions) === 200) {
-                this.props.setStateWithKey('isIDValid', true);
+            if (await getFetchStatus(SIGNUP_URL + 'signup/id?id=' + id, requestOptions) === 200) {
+                setStateWithKey('isIDValid', true);
                 alert('사용 가능한 아이디입니다!');
             }
             else {
-                this.props.setStateWithKey('isIDValid', false);
+                setStateWithKey('isIDValid', false);
                 alert('이미 존재하는 아이디입니다!');
             }
         }
-    }
+    }, [id, setStateWithKey])
 
-    render() {
-        return (
-            <div>
-                <label>
-                    아이디 <input value={this.props.id} onChange={this.changeID}/>
-                </label>
-                <button onClick={this.validateID}>
-                    중복확인
-                </button>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <label>
+                아이디 <input value={id} onChange={changeID} />
+            </label>
+            <button onClick={validateID}>
+                중복확인
+            </button>
+        </div>
+    );
 }
 
 export default IDLabel;

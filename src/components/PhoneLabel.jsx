@@ -1,54 +1,40 @@
-import React from 'react';
+import { useState, useCallback } from 'react';
 import renderMessageIfExist from '../utils/RenderMessage';
 
-class PhoneLabel extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            errmsg: ''
-        };
-        this.changePhone = this.changePhone.bind(this);
-        this.checkPhone= this.validatePhone.bind(this);
-    }
+function PhoneLabel({ phone, setStateWithKey }) {
+    const [errorMessage, setErrorMessage] = useState('');
 
-    changePhone(event) {
-        this.props.setStateWithKey('phone', event.target.value);
-        this.validatePhone(event.target.value);
-    }
-
-    validatePhone(input) {
+    const validatePhone = useCallback((input) => {
         if (input.length > 0) {
             if ((input.match(/[0-9]/g) || []).length === 0) {
-                this.setState({
-                    errmsg: '전화번호는 숫자로만 이루어져있어요'
-                });
-                this.props.setStateWithKey('isPhoneValid', false);
+                setErrorMessage('전화번호는 숫자로만 이루어져있어요');
+                setStateWithKey('isPhoneValid', false);
             }
             else {
-                this.setState({
-                    errmsg: ''
-                });
-                this.props.setStateWithKey('isPhoneValid', true);
+                setErrorMessage('');
+                setStateWithKey('isPhoneValid', true);
             }
         }
         else {
-            this.setState({
-                errmsg: ''
-            });
-            this.props.setStateWithKey('isPhoneValid', false);
+            setErrorMessage('');
+            setStateWithKey('isPhoneValid', false);
         }
-    }
+    }, [setErrorMessage, setStateWithKey]);
 
-    render() {
-        return (
-            <div>
-                <label>
-                    전화번호 <input value={this.props.phone} onChange={this.changePhone} />
-                </label>
-                {renderMessageIfExist(this.state.errmsg)}
-            </div>
-        );
-    }
+    const changePhone = useCallback((event) => {
+        const value = event.target.value;
+        setStateWithKey('phone', value);
+        validatePhone(value);
+    }, [setStateWithKey, validatePhone]);
+
+    return (
+        <div>
+            <label>
+                전화번호 <input value={phone} onChange={changePhone} />
+            </label>
+            {renderMessageIfExist(errorMessage)}
+        </div>
+    );
 }
 
 export default PhoneLabel;

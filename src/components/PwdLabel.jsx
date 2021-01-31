@@ -1,100 +1,73 @@
-import React from 'react';
+import { useState, useCallback } from 'react';
 import renderMessageIfExist from '../utils/RenderMessage';
 
-class PwdLabel extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            pwdErrmsg: '',
-            confirmErrmsg: ''
-        };
-        this.changePwd = this.changePwd.bind(this);
-        this.validatePwd = this.validatePwd.bind(this);
-        this.validateConfirm = this.validateConfirm.bind(this);
-    }
+function PwdLabel({ pwd, setStateWithKey }) {
+    const [pwdErrorMessage, setPwdErrorMessage] = useState('');
+    const [confirmErrorMessage, setConfirmErrorMessage] = useState('');
 
-    changePwd(event) {
-        const value = event.target.value;
-        this.props.setStateWithKey('pwd', value);
-        this.validatePwd(value);
-    }
-
-    validatePwd(input) {
+    const validatePwd = useCallback((input) => {
         if (input.length > 0) {
             if (input.length < 8) {
-                this.setState({
-                    pwdErrmsg: '비밀번호는 8자 이상'
-                });
-                this.props.setStateWithKey('isPwdValid', false);
+                setPwdErrorMessage('비밀번호는 8자 이상');
+                setStateWithKey('isPwdValid', false);
             } else if ((input.match(/[a-z]/g) || []).length === 0) {
-                this.setState({
-                    pwdErrmsg: '영어도 포함시켜줘'
-                });
-                this.props.setStateWithKey('isPwdValid', false);
+                setPwdErrorMessage('영어도 포함시켜줘');
+                setStateWithKey('isPwdValid', false);
             } else if ((input.match(/[0-9]/g) || []).length === 0) {
-                this.setState({
-                    pwdErrmsg: '숫자도 포함시켜줘'
-                });
-                this.props.setStateWithKey('isPwdValid', false);
+                setPwdErrorMessage('숫자도 포함시켜줘');
+                setStateWithKey('isPwdValid', false);
             }
             else {
-                this.setState({
-                    pwdErrmsg: ''
-                });
-                this.props.setStateWithKey('isPwdValid', true);
+                setPwdErrorMessage('');
+                setStateWithKey('isPwdValid', true);
             }
         }
         else {
-            this.setState({
-                pwdErrmsg: ''
-            });
-            this.props.setStateWithKey('isPwdValid', false);
+            setPwdErrorMessage('');
+            setStateWithKey('isPwdValid', false);
         }
-    }
+    }, [setPwdErrorMessage, setStateWithKey]);
 
-    validateConfirm(event) {
+    const changePwd = useCallback((event) => {
+        const value = event.target.value;
+        setStateWithKey('pwd', value);
+        validatePwd(value);
+    }, [setStateWithKey, validatePwd]);
+
+    const validateConfirm = useCallback((event) => {
         const input = event.target.value;
-
         if (input.length > 0) {
-            if (input === this.props.pwd) {
-                this.setState({
-                    confirmErrmsg: ''
-                });
-                this.props.setStateWithKey('isConfirmValid', true);
+            if (input === pwd) {
+                setConfirmErrorMessage('');
+                setStateWithKey('isConfirmValid', true);
             }
             else {
-                this.setState({
-                    confirmErrmsg: '비밀번호랑 똑같이'
-                });
-                this.props.setStateWithKey('isConfirmValid', false);
+                setConfirmErrorMessage('비밀번호랑 똑같이');
+                setStateWithKey('isConfirmValid', false);
             }
         }
         else {
-            this.setState({
-                confirmErrmsg: ''
-            });
-            this.props.setStateWithKey('isConfirmValid', false);
+            setConfirmErrorMessage('');
+            setStateWithKey('isConfirmValid', false);
         }
-    }
+    }, [pwd, setConfirmErrorMessage, setStateWithKey]);
 
-    render() {
-        return (
+    return (
+        <div>
             <div>
-                <div>
-                    <label>
-                        비밀번호 <input type="password" value={this.props.pwd} onChange={this.changePwd} />
-                    </label>
-                    {renderMessageIfExist(this.state.pwdErrmsg)}
-                </div>
-                <div>
-                    <label>
-                        비밀번호확인 <input type="password" onChange={this.validateConfirm} />
-                    </label>
-                    {renderMessageIfExist(this.state.confirmErrmsg)}
-                </div>
+                <label>
+                    비밀번호 <input type="password" value={pwd} onChange={changePwd} />
+                </label>
+                {renderMessageIfExist(pwdErrorMessage)}
             </div>
-        );
-    }
+            <div>
+                <label>
+                    비밀번호확인 <input type="password" onChange={validateConfirm} />
+                </label>
+                {renderMessageIfExist(confirmErrorMessage)}
+            </div>
+        </div>
+    );
 }
 
 export default PwdLabel;

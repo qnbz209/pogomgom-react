@@ -1,55 +1,40 @@
-import React from 'react';
+import { useCallback, useState } from 'react';
 import renderMessageIfExist from '../utils/RenderMessage';
 
-class EmailLabel extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            errmsg: ''
-        };
-        this.changeEmail = this.changeEmail.bind(this);
-        this.checkEmail= this.validateEmail.bind(this);
-    }
+function EmailLabel({ email, setStateWithKey }) {
+    const [errorMessage, setErrorMessage] = useState('');
 
-    changeEmail(event) {
-        const value = event.target.value;
-        this.props.setStateWithKey('email', value);
-        this.validateEmail(value);
-    }
-
-    validateEmail(input) {
+    const validateEmail = useCallback((input) => {
         if (input.length > 0) {
             if ((input.match(/@/) || []).length === 0) {
-                this.setState({
-                    errmsg: '이메일 양식 맞춰주세요'
-                });
-                this.props.setStateWithKey('isEmailValid', false);
+                setErrorMessage('이메일 양식 맞춰주세요');
+                setStateWithKey('isEmailValid', false);
             }
             else {
-                this.setState({
-                    errmsg: ''
-                });
-                this.props.setStateWithKey('isEmailValid', true);
+                setErrorMessage('');
+                setStateWithKey('isEmailValid', true);
             }
         }
         else {
-            this.setState({
-                errmsg: ''
-            });
-            this.props.setStateWithKey('isEmailValid', false);
+            setErrorMessage('');
+            setStateWithKey('isEmailValid', false);
         }
-    }
+    }, [setErrorMessage, setStateWithKey]);
+
+    const changeEmail = useCallback((event) => {
+        const value = event.target.value;
+        setStateWithKey('email', value);
+        validateEmail(value);
+    }, [setStateWithKey, validateEmail]);
     
-    render() {
-        return (
-            <div>
-                <label>
-                    이메일 <input value={this.props.email} onChange={this.changeEmail} />
-                </label>
-                {renderMessageIfExist(this.state.errmsg)}
-            </div>
-        );
-    }
+    return (
+        <div>
+            <label>
+                이메일 <input value={email} onChange={changeEmail} />
+            </label>
+            {renderMessageIfExist(errorMessage)}
+        </div>
+    );
 }
 
 export default EmailLabel;

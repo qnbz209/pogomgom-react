@@ -1,27 +1,20 @@
-import React from 'react';
+import { useCallback } from 'react';
 
-class AdButton extends React.Component {
-    constructor(props) {
-        super(props);
-        this.changeAd = this.changeAd.bind(this);
-    }
-
-    changeAd(event) {
+function AdButton({ setStateWithKey }) {
+    const changeAd = useCallback((event) => {
         const value = event.target.value;
-        this.props.setStateWithKey('ad', value);
-    }
+        setStateWithKey('ad', value);
+    }, [setStateWithKey]);
 
-    render() {
-        return (
+    return (
+        <div>
             <div>
-                <div>
-                    광고동의
-                    <input type="radio" value="true" name="ad" onClick={this.changeAd}/> 동의함
-                    <input type="radio" value="false" name="ad" onClick={this.changeAd}/> 동의안함
-                </div>
+                광고동의
+                <input type="radio" value="true" name="ad" onClick={changeAd} /> 동의함
+                <input type="radio" value="false" name="ad" onClick={changeAd} /> 동의안함
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default AdButton;

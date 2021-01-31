@@ -1,23 +1,19 @@
-import React from 'react';
-import { connect } from 'react-redux';
 import Signup from '../pages/Signup';
-import { changeInput } from '../modules/reducer';
+import { CHANGE_INPUT } from '../modules/reducer';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
-const SignupContainer = ({
-    changeInput
-}) => {
+function SignupContainer() {
+    const dispatch = useDispatch();
+
+    const changeInput = useCallback((input) => {
+        dispatch({type: CHANGE_INPUT, input})
+    }, [dispatch]);
+
     return (
         <Signup
             changeInput = {changeInput}/>
     );
 };
 
-export default connect(
-    state => ({
-        id: state.reducer.id,
-        name: state.reducer.name
-    }),
-    {
-        changeInput,
-    },
-)(SignupContainer);
+export default SignupContainer;

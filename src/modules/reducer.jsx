@@ -1,13 +1,11 @@
-const CHANGE_INPUT = 'reducer/CHANGE_INPUT';
+export const CHANGE_INPUT = 'reducer/CHANGE_INPUT';
 
-const initalState = {
+const initialState = {
     id: '',
     name: ''
 };
 
-export const changeInput = (input) => ({type: CHANGE_INPUT, input});
-
-function reducer(state = initalState, action) {
+function reducer(state = initialState, action) {
     switch (action.type) {
         case CHANGE_INPUT:
             return {
