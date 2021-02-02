@@ -1,21 +1,24 @@
-import getFetchStatus from '../utils/GetFetchStatus';
+import getFetchStatus from "../utils/GetFetchStatus";
 import SIGNUP_URL from '../constants/Signup';
 import { useCallback } from 'react';
+import { IDInformation } from './Interfaces';
 
-function IDLabel({ id, setStateWithKey }) {
-    const changeID = useCallback((event) => {
+function IDLabel({ id, setStateWithKey } : IDInformation) {
+    const changeID = useCallback((event : React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setStateWithKey('id', value);
         setStateWithKey('isIDValid', false);
     }, [setStateWithKey]);
 
     const validateID = useCallback(async () => {
-        const requestOptions = {method: 'POST'};
+        const requestOptions : RequestInit = {method: 'POST'};
         if (id.length === 0) {
             setStateWithKey('isIDValid', false);
         }
         else {
-            if (await getFetchStatus(SIGNUP_URL + 'signup/id?id=' + id, requestOptions) === 200) {
+            const url : string = `${SIGNUP_URL}signup/id?id=${id}`;
+            var status = (await getFetchStatus({ url, requestOptions })).status;
+            if (status === 200) {
                 setStateWithKey('isIDValid', true);
                 alert('사용 가능한 아이디입니다!');
             }

@@ -1,9 +1,10 @@
-import getFetchStatus from '../utils/GetFetchStatus';
-import { useHistory } from 'react-router-dom';
+import getFetchStatus from "../utils/GetFetchStatus";
 import SIGNUP_URL from '../constants/Signup';
 import { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
+import { JoinInformation } from './Interfaces';
 
-function JoinButton({ requestOptions, signup, id, name, valid }) {
+function JoinButton({ requestOptions, signup, id, name, valid } : JoinInformation) {
     let history = useHistory();
     
     const checkJoin = useCallback(async () => {
@@ -11,7 +12,8 @@ function JoinButton({ requestOptions, signup, id, name, valid }) {
             alert('위의 조건들을 다 만족시켜야해');
         }
         else {
-            var status = await getFetchStatus(SIGNUP_URL + 'signup', requestOptions);
+            const url : string = SIGNUP_URL + 'signup';
+            var status = (await getFetchStatus({ url, requestOptions })).status;
 
             if (status === 200) {
                 signup({id: id, name: name});

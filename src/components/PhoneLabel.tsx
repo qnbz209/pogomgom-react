@@ -1,10 +1,11 @@
 import { useState, useCallback } from 'react';
 import renderMessageIfExist from '../utils/RenderMessage';
+import { PhoneInformation } from './Interfaces';
 
-function PhoneLabel({ phone, setStateWithKey }) {
+function PhoneLabel({ phone, setStateWithKey } : PhoneInformation) {
     const [errorMessage, setErrorMessage] = useState('');
 
-    const validatePhone = useCallback((input) => {
+    const validatePhone = useCallback((input : string) => {
         if (input.length > 0) {
             if ((input.match(/[0-9]/g) || []).length === 0) {
                 setErrorMessage('전화번호는 숫자로만 이루어져있어요');
@@ -21,8 +22,8 @@ function PhoneLabel({ phone, setStateWithKey }) {
         }
     }, [setErrorMessage, setStateWithKey]);
 
-    const changePhone = useCallback((event) => {
-        const value = event.target.value;
+    const changePhone = useCallback((event : React.ChangeEvent<HTMLInputElement>) => {
+        const value : string = event.target.value;
         setStateWithKey('phone', value);
         validatePhone(value);
     }, [setStateWithKey, validatePhone]);

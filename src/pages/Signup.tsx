@@ -6,8 +6,9 @@ import PhoneLabel from '../components/PhoneLabel';
 import EmailLabel from '../components/EmailLabel';
 import AdButton from '../components/AdButton';
 import JoinButton from '../components/JoinButton';
+import { SignupInformation } from '../components/Interfaces';
 
-function Signup(props) {
+function Signup({ changeInput }: SignupInformation) {
     const [id, setID] = useState('');
     const [pwd, setPwd] = useState('');
     const [name, setName] = useState('');
@@ -19,11 +20,9 @@ function Signup(props) {
     const [isConfirmValid, setIsConfirmValid] = useState(false);
     const [isPhoneValid, setIsPhoneValid] = useState(false);
     const [isEmailValid, setIsEmailValid] = useState(false);
-    const isNameValid = (name !== '');
-    const isAdValid = (ad !== '');
-    const isAllValid = (isIDValid && isPwdValid && isConfirmValid && isPhoneValid && isEmailValid && isAdValid && isNameValid);
+    const isAllValid : boolean = (isIDValid && isPwdValid && isConfirmValid && isPhoneValid && isEmailValid && ad !== '' && name !== '');
 
-    function setStateWithKey(key, value) {
+    function setStateWithKey(key : string, value : string & boolean) {
         switch (key) {
             case 'id':
                 setID(value);
@@ -72,7 +71,7 @@ function Signup(props) {
         advertisement: ad
     });
 
-    const requestOptions = {
+    const requestOptions : RequestInit = {
         method: 'POST',
         body: requestBody,
         headers: {
@@ -104,7 +103,7 @@ function Signup(props) {
                 valid={isAllValid}
                 id={id}
                 name={name}
-                signup={props.changeInput} />
+                signup={changeInput} />
         </div>
     )
 }

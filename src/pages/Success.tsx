@@ -1,4 +1,6 @@
-function Success(props) {
+import { SuccessInformation } from '../components/Interfaces';
+
+function Success(props : SuccessInformation) {
     const date = new Date();
     const dateToLocaleString = date.toLocaleString();
 
