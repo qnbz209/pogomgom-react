@@ -4,14 +4,14 @@ import { useCallback } from 'react';
 import { IDInformation } from './Interfaces';
 
 function IDLabel({ id, setStateWithKey } : IDInformation) {
-    const changeID = useCallback((event) => {
+    const changeID = useCallback((event : React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setStateWithKey('id', value);
         setStateWithKey('isIDValid', false);
     }, [setStateWithKey]);
 
     const validateID = useCallback(async () => {
-        const requestOptions : any = {method: 'POST'};
+        const requestOptions : RequestInit = {method: 'POST'};
         if (id.length === 0) {
             setStateWithKey('isIDValid', false);
         }

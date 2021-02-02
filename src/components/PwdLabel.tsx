@@ -6,7 +6,7 @@ function PwdLabel({ pwd, setStateWithKey } : PwdInformation) {
     const [pwdErrorMessage, setPwdErrorMessage] = useState('');
     const [confirmErrorMessage, setConfirmErrorMessage] = useState('');
 
-    const validatePwd = useCallback((input) => {
+    const validatePwd = useCallback((input : string) => {
         if (input.length > 0) {
             if (input.length < 8) {
                 setPwdErrorMessage('비밀번호는 8자 이상');
@@ -29,13 +29,13 @@ function PwdLabel({ pwd, setStateWithKey } : PwdInformation) {
         }
     }, [setPwdErrorMessage, setStateWithKey]);
 
-    const changePwd = useCallback((event) => {
-        const value = event.target.value;
+    const changePwd = useCallback((event : React.ChangeEvent<HTMLInputElement>) => {
+        const value : string = event.target.value;
         setStateWithKey('pwd', value);
         validatePwd(value);
     }, [setStateWithKey, validatePwd]);
 
-    const validateConfirm = useCallback((event) => {
+    const validateConfirm = useCallback((event : React.ChangeEvent<HTMLInputElement>) => {
         const input = event.target.value;
         if (input.length > 0) {
             if (input === pwd) {

@@ -20,9 +20,7 @@ function Signup({ changeInput }: SignupInformation) {
     const [isConfirmValid, setIsConfirmValid] = useState(false);
     const [isPhoneValid, setIsPhoneValid] = useState(false);
     const [isEmailValid, setIsEmailValid] = useState(false);
-    const isNameValid = (name !== '');
-    const isAdValid = (ad !== '');
-    const isAllValid = (isIDValid && isPwdValid && isConfirmValid && isPhoneValid && isEmailValid && isAdValid && isNameValid);
+    const isAllValid : boolean = (isIDValid && isPwdValid && isConfirmValid && isPhoneValid && isEmailValid && ad !== '' && name !== '');
 
     function setStateWithKey(key : string, value : string & boolean) {
         switch (key) {

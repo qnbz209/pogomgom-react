@@ -5,7 +5,7 @@ import { EmailInformation } from './Interfaces';
 function EmailLabel({ email, setStateWithKey } : EmailInformation) {
     const [errorMessage, setErrorMessage] = useState('');
 
-    const validateEmail = useCallback((input) => {
+    const validateEmail = useCallback((input : string) => {
         if (input.length > 0) {
             if ((input.match(/@/) || []).length === 0) {
                 setErrorMessage('이메일 양식 맞춰주세요');
@@ -22,8 +22,8 @@ function EmailLabel({ email, setStateWithKey } : EmailInformation) {
         }
     }, [setErrorMessage, setStateWithKey]);
 
-    const changeEmail = useCallback((event) => {
-        const value = event.target.value;
+    const changeEmail = useCallback((event : React.ChangeEvent<HTMLInputElement>) => {
+        const value : string = event.target.value;
         setStateWithKey('email', value);
         validateEmail(value);
     }, [setStateWithKey, validateEmail]);

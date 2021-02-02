@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { NameInformation } from './Interfaces';
 
 function NameLabel({ name, setStateWithKey } : NameInformation) {
-    const changeName = useCallback((event) => {
+    const changeName = useCallback((event : React.ChangeEvent<HTMLInputElement>) => {
         setStateWithKey('name', event.target.value);
     }, [setStateWithKey]);
 

@@ -10,7 +10,7 @@ interface actionInputType {
     name : string
 };
 
-export interface RootReducer {
+export interface RootState {
     reducer: actionInputType
 };
 
